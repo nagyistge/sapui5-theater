@@ -13,17 +13,31 @@
 		<!-- add sap.ui.table,sap.ui.ux3 and/or other libraries to 'data-sap-ui-libs' if required -->
 
 		<script>
-			sap.ui.localResources("test-ux3-shell2");
+			sap.ui.localResources("sapui5-theater-web");
 			
-			var oButton1 = new sap.ui.commons.Button({text:"Button home", tooltip:"Button home"});
-			var oHome = new sap.ui.layout.HorizontalLayout("Home", {content: [oButton1]});
-			var oButton2 = new sap.ui.commons.Button({text:"Button examples", tooltip:"Button examples"});
-			var oExamples = new sap.ui.layout.HorizontalLayout("Examples", {content: [oButton2]});
+			var oInTheater = sap.ui.view({
+				id:"intheater", 
+				viewName:"sapui5-theater-web.intheater", 
+				type:sap.ui.core.mvc.ViewType.XML
+			});
+			var oMovies = sap.ui.view({
+				id:"movies", 
+				viewName:"sapui5-theater-web.movies", 
+				type:sap.ui.core.mvc.ViewType.XML
+			});
+			
+			var oTVShows = new sap.ui.commons.Button({text:"TV shows", tooltip:"TV shows"});
+			var oMusicAlbums = new sap.ui.commons.Button({text:"Music albums", tooltip:"Music albums"});
+			var oMusicSongs = new sap.ui.commons.Button({text:"Music songs", tooltip:"Music songs"});
+			var oMusicArtists = new sap.ui.commons.Button({text:"Music artists", tooltip:"Music artists"});
+			var oViz = new sap.ui.commons.Button({text:"Viz", tooltip:"Viz"});
+			var oSearch = new sap.ui.commons.Button({text:"Search", tooltip:"Search"});
+			var oSettings = new sap.ui.commons.Button({text:"Settings", tooltip:"Settings"});
 			
 			var oShell = new sap.ui.ux3.Shell(
 					"myShell",
 					{
-						appTitle : "SAPUI5 Gold Reflection Shell",
+						appTitle : "SAPUI5 Home Theater Manager",
 						appIcon : "images/SAPLogo.gif",
 						appIconTooltip : "SAP logo",
 						showLogoutButton : true,
@@ -31,33 +45,52 @@
 						showInspectorTool : true,
 						showFeederTool : true,
 						worksetItems : [
-								new sap.ui.ux3.NavigationItem("WI_home", {
-									key : "wi_home",
-									text : "Home"
+								new sap.ui.ux3.NavigationItem("WI_in_theater", {
+									key : "wi_in_theater",
+									text : "In Theater"
 								}),
-								new sap.ui.ux3.NavigationItem("WI_1", {
-									key : "wi_1",
-									text : "Examples",
+								new sap.ui.ux3.NavigationItem("WI_movies", {
+									key : "wi_movies",
+									text : "Movies"
+								}),
+								new sap.ui.ux3.NavigationItem("WI_tv_shows", {
+									key : "wi_tv_shows",
+									text : "TV Shows"
+								}),		
+								new sap.ui.ux3.NavigationItem("WI_music", {
+									key : "wi_music",
+									text : "Music",
 									subItems : [
 											new sap.ui.ux3.NavigationItem(
-													"WI_1_1", {
-														key : "wi_1_1",
-														text : "Text"
+													"WI_music_albums", {
+														key : "wi_music_albums",
+														text : "Albums"
 													}),
 											new sap.ui.ux3.NavigationItem(
-													"WI_1_2", {
-														key : "wi_1_2",
-														text : "Button"
+													"WI_music_songs", {
+														key : "wi_music_songs",
+														text : "Songs"
 													}),
 											new sap.ui.ux3.NavigationItem(
-													"WI_1_3", {
-														key : "wi_1_3",
-														text : "Image"
+													"WI_music_artists", {
+														key : "wi_music_artists",
+														text : "Artists"
 													}) ]
-								}), new sap.ui.ux3.NavigationItem("WI_API", {
-									key : "wi_api",
-									text : "API Documentation"
-								}) ],
+								}), 
+								new sap.ui.ux3.NavigationItem("WI_viz", {
+									key : "wi_viz",
+									text : "Viz"
+								}),
+								new sap.ui.ux3.NavigationItem("WI_search", {
+									key : "wi_search",
+									text : "Search"
+								}),
+								new sap.ui.ux3.NavigationItem("WI_settings", {
+									key : "wi_settings",
+									text : "Settings"
+								})
+								
+						],
 						paneBarItems : [ new sap.ui.core.Item("PI_Date", {
 							key : "pi_date",
 							text : "date"
@@ -65,7 +98,7 @@
 							key : "pi_browser",
 							text : "browser"
 						}) ],
-						content : oHome,
+						content : oInTheater,
 						toolPopups : [ new sap.ui.ux3.ToolPopup("contactTool",
 								{
 									title : "New Contact",
@@ -127,20 +160,32 @@
 							var sId = oEvent.getParameter("id");
 							var oShell = oEvent.oSource;
 							switch (sId) {
-							case "WI_home":
-								oShell.setContent(oHome);
+							case "WI_in_theater":
+								oShell.setContent(oInTheater);
 								break;
-							case "WI_1_1":
-								oShell.setContent(oExamples);
+							case "WI_movies":
+								oShell.setContent(oMovies);
 								break;
-							case "WI_1_2":
-								oShell.setContent(oExamples);
+							case "WI_tv_shows":
+								oShell.setContent(oTVShows);
+								break;	
+							case "WI_music_albums":
+								oShell.setContent(oMusicAlbums);
 								break;
-							case "WI_1_3":
-								oShell.setContent(oExamples);
+							case "WI_music_songs":
+								oShell.setContent(oMusicSongs);
 								break;
-							case "WI_API":
-								oShell.setContent(oHome);
+							case "WI_music_artists":
+								oShell.setContent(oMusicArtists);
+								break;
+							case "WI_viz":
+								oShell.setContent(oViz);
+								break;
+							case "WI_search":
+								oShell.setContent(oSearch);
+								break;
+							case "WI_settings":
+								oShell.setContent(oSettings);
 								break;
 							default:
 								break;
