@@ -1,0 +1,6 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.ui.commons"
+			controllerName="sapui5-theater-web.musicsongs" xmlns:html="http://www.w3.org/1999/xhtml">
+
+	<TextView text="Music songs view" tooltip="Music songs view" />
+
+</core:View>

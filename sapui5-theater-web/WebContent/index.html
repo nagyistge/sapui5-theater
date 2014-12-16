@@ -25,14 +25,41 @@
 				viewName:"sapui5-theater-web.movies", 
 				type:sap.ui.core.mvc.ViewType.XML
 			});
-			
-			var oTVShows = new sap.ui.commons.Button({text:"TV shows", tooltip:"TV shows"});
-			var oMusicAlbums = new sap.ui.commons.Button({text:"Music albums", tooltip:"Music albums"});
-			var oMusicSongs = new sap.ui.commons.Button({text:"Music songs", tooltip:"Music songs"});
-			var oMusicArtists = new sap.ui.commons.Button({text:"Music artists", tooltip:"Music artists"});
-			var oViz = new sap.ui.commons.Button({text:"Viz", tooltip:"Viz"});
-			var oSearch = new sap.ui.commons.Button({text:"Search", tooltip:"Search"});
-			var oSettings = new sap.ui.commons.Button({text:"Settings", tooltip:"Settings"});
+			var oTVShows = sap.ui.view({
+				id:"tvshows", 
+				viewName:"sapui5-theater-web.tvshows", 
+				type:sap.ui.core.mvc.ViewType.XML
+			});
+			var oMusicAlbums = sap.ui.view({
+				id:"musicalbums", 
+				viewName:"sapui5-theater-web.musicalbums", 
+				type:sap.ui.core.mvc.ViewType.XML
+			});
+			var oMusicSongs = sap.ui.view({
+				id:"musicsongs", 
+				viewName:"sapui5-theater-web.musicsongs", 
+				type:sap.ui.core.mvc.ViewType.XML
+			});
+			var oMusicArtists = sap.ui.view({
+				id:"musicartists", 
+				viewName:"sapui5-theater-web.musicartists", 
+				type:sap.ui.core.mvc.ViewType.XML
+			});
+			var oViz = sap.ui.view({
+				id:"viz", 
+				viewName:"sapui5-theater-web.viz", 
+				type:sap.ui.core.mvc.ViewType.XML
+			});
+			var oSearch = sap.ui.view({
+				id:"search", 
+				viewName:"sapui5-theater-web.search", 
+				type:sap.ui.core.mvc.ViewType.XML
+			});
+			var oSettings = sap.ui.view({
+				id:"settings", 
+				viewName:"sapui5-theater-web.settings", 
+				type:sap.ui.core.mvc.ViewType.XML
+			});
 			
 			var oShell = new sap.ui.ux3.Shell(
 					"myShell",
