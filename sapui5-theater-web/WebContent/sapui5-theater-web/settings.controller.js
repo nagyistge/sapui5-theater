@@ -34,5 +34,15 @@ sap.ui.controller("sapui5-theater-web.settings", {
 //	onExit: function() {
 //
 //	}
+	
+	onCheckSettings : function() {
+		jQuery.sap.require("sap.ui.commons.MessageBox");
+		sap.ui.commons.MessageBox.show("Check settings button", sap.ui.commons.MessageBox.Icon.ERROR);
+	},
+
+	onImportTestData : function() {
+		jQuery.sap.require("sap.ui.commons.MessageBox");
+		sap.ui.commons.MessageBox.show("Import test data", sap.ui.commons.MessageBox.Icon.SUCCESS);
+	},
 
 });

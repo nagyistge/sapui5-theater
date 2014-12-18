@@ -17,7 +17,7 @@
 				<Label text="User" />
 				<TextField value="xbmc" />
 				<Label text="Password" />
-				<TextField value="xbmc" />
+				<PasswordField value="xbmc" />
 				<Label />
 				<Button text="Check settings" tooltip="Check settings" press="onCheckSettings"/>				
 			<core:Title text="Import data" />
