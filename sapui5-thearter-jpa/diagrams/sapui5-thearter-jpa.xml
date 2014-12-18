@@ -1,3 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<entities>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
+	<entity>
+		<entity-name>com.sap.hana.cloud.sample.Album</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>248</entity-height>
+		<entity-X-Coordinate>320</entity-X-Coordinate>
+		<entity-Y-Coordinate>130</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
 </entities>
