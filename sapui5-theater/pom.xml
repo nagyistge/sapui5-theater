@@ -16,8 +16,8 @@
 	</properties>
 	
 	<modules>
-		<!-- <module>sapui5-theater-model-jpa</module>
-		<module>sapui5-theater-web</module> -->
+		<module>sapui5-theater-model-jpa</module>
+		<module>sapui5-theater-web</module>
 	</modules>
 
 	<dependencies>
