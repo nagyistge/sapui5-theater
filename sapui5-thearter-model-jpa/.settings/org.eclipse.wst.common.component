@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="sapui5-thearter-jpa">
+    <wb-module deploy-name="sapui5-thearter-model-jpa">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="sapui5-thearter-jpa"/>
-        <property name="java-output-path" value="/sapui5-thearter-jpa/build/classes"/>
+        <property name="java-output-path" value="/sapui5-thearter-model-jpa/build/classes"/>
+        <property name="context-root" value="sapui5-thearter-model-jpa"/>
     </wb-module>
 </project-modules>
