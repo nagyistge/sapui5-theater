@@ -37,6 +37,15 @@ sap.ui.controller("sapui5-theater-web.settings", {
 	
 	onCheckSettings : function() {
 		jQuery.sap.require("sap.ui.commons.MessageBox");
+		var kodiURL = "http://192.168.1.251";
+		var data = {"jsonrpc": "2.0", "method": "Application.GetProperties", "params": {"properties": ["volume"]}, "id": 1};
+		$.getJSON( kodiURL, data)
+			.done(function() {
+				console.log("Call OK");
+			})
+			.fail(function() {
+				console.log("Call KO")
+			});
 		sap.ui.commons.MessageBox.show("Check settings button", sap.ui.commons.MessageBox.Icon.ERROR);
 	},
 
