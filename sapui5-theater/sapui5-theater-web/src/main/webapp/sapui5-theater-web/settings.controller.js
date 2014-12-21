@@ -37,9 +37,16 @@ sap.ui.controller("sapui5-theater-web.settings", {
 	
 	onCheckSettings : function() {
 		jQuery.sap.require("sap.ui.commons.MessageBox");
-		var kodiURL = "http://192.168.1.251";
-		var data = {"jsonrpc": "2.0", "method": "Application.GetProperties", "params": {"properties": ["volume"]}, "id": 1};
-		$.getJSON( kodiURL, data)
+		var kodiDestination = "/kodiweb"
+		var weatherURL = "/openweathermap?q=:Lisbon"
+		var oModel = new sap.ui.model.json.JSONModel();
+        oModel.loadData(weatherURL, null, false);
+        this.setModel(oModel)
+        console.log("/name")
+		var commandJSON = {"jsonrpc": "2.0", "method": "Application.GetProperties", "params": {"properties": ["volume"]}, "id": 1};
+		console.log(JSON.stringify(commandJSON));
+		var kodiURL = kodiDestination + JSON.stringify(commandJSON);
+		$.getJSON( weatherURL )
 			.done(function() {
 				console.log("Call OK");
 			})

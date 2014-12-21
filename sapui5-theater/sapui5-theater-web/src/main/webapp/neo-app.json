@@ -1,0 +1,23 @@
+{
+	"authenticationMethod": "none",
+	"routes": [
+		{
+			"path": "/kodiweb",
+			"target":
+			{
+				"type": "destination",
+				"name": "kodiweb"
+			},
+			"description": "Kodi server Web URL"
+		},
+		{
+            "path": "/openweathermap",
+            "target":
+            {
+                "type": "destination",
+                "name": "openweather"
+            },
+            "description": "OpenWeather System"
+        },
+	]
+}
