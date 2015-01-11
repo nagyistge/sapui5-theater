@@ -127,21 +127,22 @@
 							text : "browser"
 						}) ],
 						content : oInTheater,
-						toolPopups : [ new sap.ui.ux3.ToolPopup("contactTool",
+						toolPopups : [ 
+							new sap.ui.ux3.ToolPopup("randomAlbum",
 								{
-									title : "New Contact",
-									tooltip : "Create New Contact",
-									icon : "sap-icon://inbox",
+									title : "Random Album",
+									tooltip : "Play Random Album",
+									icon : "sap-icon://question-mark",
 									iconHover : "images/Contact_hover.png",
 									content : [ new sap.ui.commons.TextView({
-										text : "Here could be a contact sheet."
+										text : "This icon will play a random album."
 									}) ],
 									buttons : [ new sap.ui.commons.Button(
-											"cancelContactButton", {
+											"cancelButton", {
 												text : "Cancel",
 												press : function(oEvent) {
 													sap.ui.getCore().byId(
-															"contactTool")
+															"randomAlbum")
 															.close();
 												}
 											}) ]
