@@ -138,7 +138,7 @@
 										text : "This icon will play a random album."
 									}) ],
 									buttons : [ new sap.ui.commons.Button(
-											"cancelButton", {
+											"cancelRandomAlbumButton", {
 												text : "Cancel",
 												press : function(oEvent) {
 													sap.ui.getCore().byId(
@@ -146,7 +146,84 @@
 															.close();
 												}
 											}) ]
-								}) ],
+							}),
+							new sap.ui.ux3.ToolPopup("partyMode",
+								{
+									title : "Party Mode",
+									tooltip : "Turn Party Mode On And Off",
+									icon : "sap-icon://lab",
+									iconHover : "images/Contact_hover.png",
+									content : [ new sap.ui.commons.TextView({
+										text : "This icon will turn the party mode on and off."
+									}) ],
+									buttons : [ new sap.ui.commons.Button(
+											"cancelPartyModeButton", {
+												text : "Cancel",
+												press : function(oEvent) {
+													sap.ui.getCore().byId(
+															"partyMode")
+															.close();
+												}
+											}) ]
+							}),
+							new sap.ui.ux3.ToolPopup("fullScreen",
+								{
+									title : "Full Screen",
+									tooltip : "Toggle Full Screen",
+									icon : "sap-icon://display",
+									iconHover : "images/Contact_hover.png",
+									content : [ new sap.ui.commons.TextView({
+										text : "This icon will toggle full screen/GUI."
+									}) ],
+									buttons : [ new sap.ui.commons.Button(
+											"cancelFullScreenButton", {
+												text : "Cancel",
+												press : function(oEvent) {
+													sap.ui.getCore().byId(
+															"fullScreen")
+															.close();
+												}
+											}) ]
+							}),
+							new sap.ui.ux3.ToolPopup("scan",
+									{
+										title : "Scan",
+										tooltip : "Scan Audio Sources For New Items",
+										icon : "sap-icon://refresh",
+										iconHover : "images/Contact_hover.png",
+										content : [ new sap.ui.commons.TextView({
+											text : "This icon will scan audio sources for new items."
+										}) ],
+										buttons : [ new sap.ui.commons.Button(
+												"cancelScanButton", {
+													text : "Cancel",
+													press : function(oEvent) {
+														sap.ui.getCore().byId(
+																"scan")
+																.close();
+													}
+												}) ]
+							}),
+							new sap.ui.ux3.ToolPopup("reboot",
+									{
+										title : "Reboot",
+										tooltip : "Reboot The System",
+										icon : "sap-icon://log",
+										iconHover : "images/Contact_hover.png",
+										content : [ new sap.ui.commons.TextView({
+											text : "This icon will reboot the Kodi server."
+										}) ],
+										buttons : [ new sap.ui.commons.Button(
+												"cancelRebootButton", {
+													text : "Cancel",
+													press : function(oEvent) {
+														sap.ui.getCore().byId(
+																"reboot")
+																.close();
+													}
+												}) ]
+							}),	
+							],
 						headerItems : [
 								new sap.ui.commons.TextView({
 									text : "Welcome Arnaud",
