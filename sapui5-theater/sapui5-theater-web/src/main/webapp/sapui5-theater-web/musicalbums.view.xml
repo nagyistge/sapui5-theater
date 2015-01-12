@@ -6,9 +6,12 @@
 		xmlns:mvc="sap.ui.core.mvc" 
 		xmlns:html="http://www.w3.org/1999/xhtml">
 
-	<t:Table title="Albums list" >
-		<t:Column>
+	<t:Table title="Albums list" rows="{/modelData}" >
+		<t:Column>	
 			<Label text="Title" />
+			<t:template>
+				<TextField value="{title}" />
+			</t:template>
 		</t:Column>
 		<t:Column>
 			<Label text="Artist" />
