@@ -1,24 +1,25 @@
 <core:View 
 		controllerName="sapui5-theater-web.musicalbums"
 		xmlns="sap.ui.commons"
+		xmlns:t="sap.ui.table"
 		xmlns:core="sap.ui.core" 
 		xmlns:mvc="sap.ui.core.mvc" 
 		xmlns:html="http://www.w3.org/1999/xhtml">
 
-	<!-- <Table title="Albums list" >
-		<Column>
+	<t:Table title="Albums list" >
+		<t:Column>
 			<Label text="Title" />
-		</Column>
-		<Column>
+		</t:Column>
+		<t:Column>
 			<Label text="Artist" />
-		</Column>
-		<Column>
+		</t:Column>
+		<t:Column>
 			<Label text="Year" />
-		</Column>
-		<Column>
+		</t:Column>
+		<t:Column>
 			<Label text="Rating" />
-		</Column>
-	</Table> -->
-	<TextView text="Music albums view" tooltip="Music albums view" />
+		</t:Column>
+	</t:Table>
+	<!--  TextView text="Music albums view" tooltip="Music albums view" / -->
 
 </core:View>
