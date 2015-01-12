@@ -6,7 +6,20 @@ sap.ui.controller("sapui5-theater-web.musicalbums", {
 * @memberOf test-xml.test-xml
 */
 	onInit: function() {
-
+		
+		//Define some sample data 
+		//TODO: move the data binding to an higher level
+		var aAlbums = [
+			{title: "As Heard on Radio Soulwax, Part 7", albumArtistCredits: "2 Many DJ’s", year: 2004, rating: -1},
+			{title: "Born to Die: The Paradise Edition", albumArtistCredits: "Lana Del Rey", year: 2012, rating: 5},
+			{title: "Ultraviolence", albumArtistCredits: "Lana Del Rey", year: 2014, rating: 4},			
+			{title: "Birdy", albumArtistCredits: "Birdy", year: 2011, rating: 4},
+			{title: "Fire Within", albumArtistCredits: "Birdy", year: 2013, rating: -1},
+			{title: "Charango", albumArtistCredits: "Morcheeba", year: 2002, rating: 3}, ];
+		
+		var oModel = new sap.ui.model.json.JSONModel();
+		oModel.setData({modelData: aAlbums});
+		
 	},
 
 /**
