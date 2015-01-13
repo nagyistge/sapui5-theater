@@ -6,21 +6,42 @@
 		xmlns:mvc="sap.ui.core.mvc" 
 		xmlns:html="http://www.w3.org/1999/xhtml">
 
-	<t:Table title="Albums list" rows="{/modelData}" >
-		<t:Column>	
+	<t:Table title="6 albums in the library" rows="{/modelData}" >
+		<t:toolbar>
+			<Toolbar>
+				<Button text="Play it now!" icon="sap-icon://play"></Button>
+				<ToolbarSeparator></ToolbarSeparator>
+				<MenuButton text="Playlist" icon="sap-icon://list">
+					<Menu>
+						<MenuItem text="Play next"></MenuItem>
+						<MenuItem text="Append"></MenuItem>
+					</Menu>
+				</MenuButton>
+			</Toolbar>
+		</t:toolbar>
+		<t:Column sortProperty="title" filterProperty="title">	
 			<Label text="Title" />
 			<t:template>
 				<TextField value="{title}" />
 			</t:template>
 		</t:Column>
-		<t:Column>
+		<t:Column sortProperty="albumArtistCredits" filterProperty="albumArtistCredits">
 			<Label text="Artist" />
+			<t:template>
+				<TextField value="{albumArtistCredits}" />
+			</t:template>
 		</t:Column>
-		<t:Column>
+		<t:Column sortProperty="year" filterProperty="year" width="100px">
 			<Label text="Year" />
+			<t:template>
+				<TextField value="{year}" />
+			</t:template>
 		</t:Column>
-		<t:Column>
+		<t:Column sortProperty="rating" filterProperty="rating" width="200px">
 			<Label text="Rating" />
+			<t:template>
+				<RatingIndicator value="{rating}" />
+			</t:template>
 		</t:Column>
 	</t:Table>
 	<!--  TextView text="Music albums view" tooltip="Music albums view" / -->
