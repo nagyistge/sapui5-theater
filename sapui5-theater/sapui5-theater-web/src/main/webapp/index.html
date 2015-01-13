@@ -166,6 +166,25 @@
 												}
 											}) ]
 							}),
+							new sap.ui.ux3.ToolPopup("rateTrack",
+									{
+										title : "Rate Track",
+										tooltip : "Rate The Currently Played Track",
+										icon : "sap-icon://favorite",
+										iconHover : "images/Contact_hover.png",
+										content : [ new sap.ui.commons.TextView({
+											text : "This icon will allow the user to rate the currently played track."
+										}) ],
+										buttons : [ new sap.ui.commons.Button(
+												"cancelRateTrackButton", {
+													text : "Cancel",
+													press : function(oEvent) {
+														sap.ui.getCore().byId(
+																"rateTrack")
+																.close();
+													}
+												}) ]
+							}),
 							new sap.ui.ux3.ToolPopup("fullScreen",
 								{
 									title : "Full Screen",
