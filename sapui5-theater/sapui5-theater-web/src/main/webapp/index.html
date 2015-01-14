@@ -8,7 +8,7 @@
 		<!--  <script src="resources/sap-ui-core.js" -->
 		<script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
 				id="sap-ui-bootstrap"
-				data-sap-ui-libs="sap.ui.commons, sap.ui.ux3"
+				data-sap-ui-libs="sap.ui.commons, sap.ui.ux3, sap.ui.layout"
 				data-sap-ui-theme="sap_goldreflection">
 		</script>
 		<!-- add sap.ui.table,sap.ui.ux3 and/or other libraries to 'data-sap-ui-libs' if required -->
@@ -119,12 +119,12 @@
 								})
 								
 						],
-						paneBarItems : [ new sap.ui.core.Item("PI_Date", {
-							key : "pi_date",
-							text : "date"
-						}), new sap.ui.core.Item("PI_Browser", {
-							key : "pi_browser",
-							text : "browser"
+						paneBarItems : [ new sap.ui.core.Item("PI_Controls", {
+							key : "pi_controls",
+							text : "controls"
+						}), new sap.ui.core.Item("PI_Playlist", {
+							key : "pi_playlist",
+							text : "playlist"
 						}) ],
 						content : oMusicAlbums,
 						toolPopups : [ 
@@ -320,14 +320,20 @@
 							var sKey = oEvent.getParameter("key");
 							var oShell = oEvent.oSource;
 							switch (sKey) {
-							case "pi_date":
-								var oDate = new Date();
+							case "pi_controls":
 								oShell.setPaneContent(
-										new sap.ui.commons.TextView({
-											text : oDate.toLocaleString()
-										}), true);
+										new sap.ui.layout.form.SimpleForm({
+											maxContainerCols: 1,
+											content:[new sap.ui.core.Title({text:"Upper part"}),
+					 				         new sap.ui.commons.Label({text:"Image"}),
+					 				       	 new sap.ui.commons.TextField({value:"Max"}),
+//					 				         new sap.ui.commons.Label({text:"Controls"}),
+//					 				         new sap.ui.commons.Label({text:"currently playing:"}),
+//					 				         new sap.ui.commons.Label({text:"Lana Del Rey..."}),
+										]}), true);
+								// Object not destroyed, but should be changed
 								break;
-							case "pi_browser":
+							case "pi_playlist":
 								oShell
 										.setPaneContent(
 												new sap.ui.commons.TextView(
@@ -351,10 +357,10 @@
 							alert("Feed entry submitted: "
 									+ oEvent.getParameter("text"));
 						},
-						paneClosed : function(oEvent) {
-							alert("Pane has been closed: "
-									+ oEvent.getParameter("id"));
-						}
+// 						paneClosed : function(oEvent) {
+// 							alert("Pane has been closed: "
+// 									+ oEvent.getParameter("id"));
+// 						}
 					})
 			
 			//Define some sample data 
