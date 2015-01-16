@@ -23,6 +23,9 @@
 			<core:Title text="Import data" />
 				<Label />
 				<Button text="Import test data" tooltip="Import test data" press="onImportTestData"/>
+			<core:Title text="Album inspector" />
+				<Label />
+				<Button text="Test album inspector" tooltip="Test album explorer" press="onTestAlbumInspector" />
 		</f:content>
 	</f:SimpleForm>
 

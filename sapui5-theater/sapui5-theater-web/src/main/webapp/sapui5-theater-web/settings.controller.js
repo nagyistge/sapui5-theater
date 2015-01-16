@@ -61,4 +61,94 @@ sap.ui.controller("sapui5-theater-web.settings", {
 		sap.ui.commons.MessageBox.show("Import test data", sap.ui.commons.MessageBox.Icon.SUCCESS);
 	},
 
+	onTestAlbumInspector : function() {
+		jQuery.sap.require("sap.ui.commons.MessageBox");
+		//Helper function to easier create a Matrixlayout
+		function row(sLabel, sText, sUrl) {
+			var oControl;
+			if(!sUrl){
+				oControl = new sap.ui.commons.TextView({
+					text: sText,
+					tooltip: sText
+				});
+			}else{
+				oControl = new sap.ui.commons.Link({
+					text: sText,
+					href: sUrl,
+					tooltip: sText,
+					target: "_blank"
+				});
+			}
+
+			var oLabel = new sap.ui.commons.Label({
+				text: sLabel + ":",
+				labelFor: oControl
+			});
+
+			var oMLCell1 = new sap.ui.commons.layout.MatrixLayoutCell({
+				hAlign : sap.ui.commons.layout.HAlign.End,
+				vAlign : sap.ui.commons.layout.VAlign.Top,
+				content : [ oLabel ]
+			});
+			var oMLCell2 = new sap.ui.commons.layout.MatrixLayoutCell({
+				hAlign : sap.ui.commons.layout.HAlign.Begin,
+				vAlign : sap.ui.commons.layout.VAlign.Top,
+				content : [ oControl ]
+			});
+
+			return new sap.ui.commons.layout.MatrixLayoutRow({
+				cells : [ oMLCell1, oMLCell2 ]
+			});
+		}
+		
+		//Facet content of the ThingInspector
+		var oFC1 = new sap.ui.ux3.ThingGroup({
+			title : "Group 1",
+			content: [
+				new sap.ui.commons.Button({
+					text: "Some example content",
+					tooltip: "Some example content"
+				})
+			]
+		});
+		
+		var oTI = new sap.ui.ux3.ThingInspector({
+			firstTitle: "Born To Die",
+			secondTitle: "Lana Del Rey",
+			type: "Album",
+			icon: "sap-icon://microphone",
+			updateActionEnabled: false,
+			facets: [
+				 new sap.ui.ux3.NavigationItem({key : "overview", text : "Album description"}),
+				 //new sap.ui.ux3.NavigationItem({key : "detail", text : "Details"}),
+			],
+			headerContent: [
+			     new sap.ui.ux3.ThingGroup({
+			    	 title : "About",
+			         content: [
+			                   new sap.ui.commons.layout.MatrixLayout({rows: [
+			                   row("Date of birth", "09/09/1999"),
+			                   row("Gender", "female"),
+			                   row("Nationality", "american"),
+			                   row("VIP", "yes")
+			                   ]})
+			        		]
+			       }),
+			],
+			facetSelected: function(oEvent) {
+				oTI.removeAllFacetContent();
+				oTI.removeAllActions();
+				switch(oEvent.getParameter("key")){
+					case "overview":
+						oTI.addFacetContent(oFC1);
+						break;
+					case "detail":
+						oTI.addFacetContent(oFC1);
+						break;
+				}
+			},
+		});
+		oTI.open();
+	},
+	
 });
