@@ -112,6 +112,14 @@ sap.ui.controller("sapui5-theater-web.settings", {
 			]
 		});
 		
+		//Actions of the ThingInspector
+		var oPlay = new sap.ui.ux3.ThingAction({
+			id: "play",
+			text: "Play it now!",
+			tooltip: "Play it now!",
+			icon: "sap-icon://play",
+		});
+		
 		var oTI = new sap.ui.ux3.ThingInspector({
 			firstTitle: "Born To Die",
 			secondTitle: "Lana Del Rey",
@@ -124,7 +132,7 @@ sap.ui.controller("sapui5-theater-web.settings", {
 			],
 			headerContent: [
 			     new sap.ui.ux3.ThingGroup({
-			    	 title : "About",
+			    	 title : "Author",
 			         content: [
 			                   new sap.ui.commons.layout.MatrixLayout({rows: [
 			                   row("Date of birth", "09/09/1999"),
@@ -134,15 +142,21 @@ sap.ui.controller("sapui5-theater-web.settings", {
 			                   ]})
 			        		]
 			       }),
+				   new sap.ui.ux3.ThingGroup({
+					   title : "Cover",
+				       content: [
+				                   new sap.ui.commons.Image("cover", {
+				                	   src: "http://assets.fanart.tv/fanart/music/b7539c32-53e7-4908-bda3-81449c367da6/albumcover/born-to-die-4f2b7dccc6937.jpg/preview",
+				                   }),
+				        		]
+				    }),
 			],
 			facetSelected: function(oEvent) {
 				oTI.removeAllFacetContent();
 				oTI.removeAllActions();
 				switch(oEvent.getParameter("key")){
 					case "overview":
-						oTI.addFacetContent(oFC1);
-						break;
-					case "detail":
+						oTI.addAction(oPlay);
 						oTI.addFacetContent(oFC1);
 						break;
 				}
