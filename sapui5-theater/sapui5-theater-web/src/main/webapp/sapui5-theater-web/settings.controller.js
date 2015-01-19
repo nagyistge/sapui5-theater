@@ -101,14 +101,22 @@ sap.ui.controller("sapui5-theater-web.settings", {
 			});
 		}
 		
+		var oHeader = new sap.ui.layout.HorizontalLayout("Layout1", {
+		    content:[						    
+				new sap.ui.commons.Image("cover", {
+				    src: "http://assets.fanart.tv/fanart/music/b7539c32-53e7-4908-bda3-81449c367da6/albumcover/born-to-die-4f2b7dccc6937.jpg/preview",
+				}),
+			    new sap.ui.commons.TextView({
+				    text : "Born to Die is the second studio album by American singer-songwriter Lana Del Rey. The album was released on January 27, 2012 on iTunes and on January 31, 2012 by Interscope Records, Polydor Records, and Stranger Records.",
+                }),				
+			]				         
+		});
+		
 		//Facet content of the ThingInspector
 		var oFC1 = new sap.ui.ux3.ThingGroup({
 			title : "Group 1",
 			content: [
-				new sap.ui.commons.Button({
-					text: "Some example content",
-					tooltip: "Some example content"
-				})
+				oHeader,
 			]
 		});
 		
@@ -121,7 +129,7 @@ sap.ui.controller("sapui5-theater-web.settings", {
 		});
 		
 		var oTI = new sap.ui.ux3.ThingInspector({
-			firstTitle: "Born To Die",
+			firstTitle: "Born to Die: The Paradise Edition",
 			secondTitle: "Lana Del Rey",
 			type: "Album",
 			icon: "sap-icon://microphone",
@@ -131,25 +139,26 @@ sap.ui.controller("sapui5-theater-web.settings", {
 				 //new sap.ui.ux3.NavigationItem({key : "detail", text : "Details"}),
 			],
 			headerContent: [
+				new sap.ui.ux3.ThingGroup({
+				   	 title : "Album",
+				     content: [
+				         new sap.ui.commons.layout.MatrixLayout({rows: [
+						     row("Realease year", "2012"),
+						     row("Label", "Polydor"),
+						     row("Style", "Alternative/Indie Rock")
+						     ]})
+				     ]
+				 }),
 			     new sap.ui.ux3.ThingGroup({
 			    	 title : "Author",
 			         content: [
 			                   new sap.ui.commons.layout.MatrixLayout({rows: [
-			                   row("Date of birth", "09/09/1999"),
-			                   row("Gender", "female"),
+			                   row("Born", "New York City, New York, USA (1986)"),
 			                   row("Nationality", "american"),
-			                   row("VIP", "yes")
+			                   row("Years active", "2010s")
 			                   ]})
-			        		]
-			       }),
-				   new sap.ui.ux3.ThingGroup({
-					   title : "Cover",
-				       content: [
-				                   new sap.ui.commons.Image("cover", {
-				                	   src: "http://assets.fanart.tv/fanart/music/b7539c32-53e7-4908-bda3-81449c367da6/albumcover/born-to-die-4f2b7dccc6937.jpg/preview",
-				                   }),
-				        		]
-				    }),
+			         ]
+			     }),
 			],
 			facetSelected: function(oEvent) {
 				oTI.removeAllFacetContent();
