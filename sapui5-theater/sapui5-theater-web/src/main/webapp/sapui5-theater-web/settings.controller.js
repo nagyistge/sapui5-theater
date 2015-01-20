@@ -106,10 +106,33 @@ sap.ui.controller("sapui5-theater-web.settings", {
 				new sap.ui.commons.Image("cover", {
 				    src: "http://assets.fanart.tv/fanart/music/b7539c32-53e7-4908-bda3-81449c367da6/albumcover/born-to-die-4f2b7dccc6937.jpg/preview",
 				}),
-			    new sap.ui.commons.TextView({
-				    text : "Born to Die is the second studio album by American singer-songwriter Lana Del Rey. The album was released on January 27, 2012 on iTunes and on January 31, 2012 by Interscope Records, Polydor Records, and Stranger Records.",
-                }),				
+				new sap.ui.commons.TextView({
+			        text : "Born to Die is the second studio album by American singer-songwriter Lana Del Rey. The album was released on January 27, 2012 on iTunes and on January 31, 2012 by Interscope Records, Polydor Records, and Stranger Records.",
+                }),			
 			]				         
+		});
+		
+		var oTracks = new sap.ui.table.Table({
+			title: "Track list",
+			visibleRowCount: 7,
+			firstVisibleRow: 3,
+			selectionMode: sap.ui.table.SelectionMode.Single,
+			navigationMode: sap.ui.table.NavigationMode.Paginator,
+			fixedColumnCount: 2,
+			columns:[
+                new sap.ui.table.Column({
+                	label: new sap.ui.commons.Label({text: "Nb"}),
+                }),
+                new sap.ui.table.Column({
+                	label: new sap.ui.commons.Label({text: "Track"}),
+                }),
+                new sap.ui.table.Column({
+                	label: new sap.ui.commons.Label({text: "Duration"}),
+                }),
+                new sap.ui.table.Column({
+                	label: new sap.ui.commons.Label({text: "Artist"}),
+                }),              
+			],
 		});
 		
 		//Facet content of the ThingInspector
@@ -117,6 +140,7 @@ sap.ui.controller("sapui5-theater-web.settings", {
 			title : "Group 1",
 			content: [
 				oHeader,
+				//oTracks,
 			]
 		});
 		
