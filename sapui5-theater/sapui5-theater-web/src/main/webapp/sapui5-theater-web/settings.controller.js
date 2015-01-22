@@ -178,7 +178,7 @@ sap.ui.controller("sapui5-theater-web.settings", {
 			         content: [
 			                   new sap.ui.commons.layout.MatrixLayout({rows: [
 			                   row("Born", "New York City, New York, USA (1986)"),
-			                   row("Nationality", "american"),
+			                   row("Nationality", "American"),
 			                   row("Years active", "2010s")
 			                   ]})
 			         ]

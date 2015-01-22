@@ -62,47 +62,43 @@
 				type:sap.ui.core.mvc.ViewType.XML
 			});
 			
-// 			var oControls = new sap.ui.commons.layout.BorderLayout({
-// 				height: "350px",
-//  				top: new sap.ui.commons.layout.BorderLayoutArea({
-//  					size: "60%",
-//  					contentAlign: "center",
-//   					content: [new sap.ui.commons.Image({src: "http://assets.fanart.tv/fanart/music/b7539c32-53e7-4908-bda3-81449c367da6/albumcover/born-to-die-4f2b7dccc6937.jpg/preview"})],
-//   					}),
-//   				center: new sap.ui.commons.layout.BorderLayoutArea({
-//   					contentAlign: "center",
-//   					content: [new sap.ui.commons.TextView({text: "Born to Die: The Paradise Edition - Ride"})],
-//   					}),	  			
-//  				bottom: new sap.ui.commons.layout.BorderLayoutArea({
-//  					contentAlign: "center",
-//  					content: [
-//  						new sap.ui.commons.Button({icon: "sap-icon://media-rewind"}),
-//  						new sap.ui.commons.Button({icon: "sap-icon://media-play"}),
-//  						new sap.ui.commons.Button({icon: "sap-icon://media-pause"}),
-//  						new sap.ui.commons.Button({icon: "sap-icon://media-forward"}),
-//  						],
-//  					}),
-// 			});
-
-            var oControls = new sap.ui.commons.layout.VerticalLayout({
-            	content:[
-                    new sap.ui.commons.TextView({text: ""}),
-                    new sap.ui.commons.Image({
-	                    src: "http://assets.fanart.tv/fanart/music/b7539c32-53e7-4908-bda3-81449c367da6/albumcover/born-to-die-4f2b7dccc6937.jpg/preview"
-	                }),
-	                new sap.ui.commons.TextView({text: ""}),
-	                new sap.ui.commons.TextView({text: "Born to Die: The Paradise Edition - Ride"}),
-	                new sap.ui.commons.TextView({text: ""}),
-	                new sap.ui.commons.layout.HorizontalLayout({
-	                	content:[
-                            new sap.ui.commons.Button({icon: "sap-icon://media-rewind"}),
-                            new sap.ui.commons.Button({icon: "sap-icon://media-play"}),
-                            new sap.ui.commons.Button({icon: "sap-icon://media-pause"}),
-                            new sap.ui.commons.Button({icon: "sap-icon://media-forward"}),
-	                	],
-	                }),
-            	],
-            });
+  			var oControls = new sap.ui.commons.layout.BorderLayout({
+  				height: "450px",
+   				top: new sap.ui.commons.layout.BorderLayoutArea({
+   					size: "50%",
+   					contentAlign: "center",
+    					content: [
+    						new sap.ui.commons.Image({src: "http://assets.fanart.tv/fanart/music/b7539c32-53e7-4908-bda3-81449c367da6/albumcover/born-to-die-4f2b7dccc6937.jpg/preview"})
+    					],
+    			}),
+    			center: new sap.ui.commons.layout.BorderLayoutArea({
+    				contentAlign: "center",
+    				content: [
+    				    new sap.ui.layout.VerticalLayout({
+    				    	content:[
+								new sap.ui.commons.TextView({text: ""}),
+		    					new sap.ui.commons.TextView({text: "Born to Die: The Paradise Edition - Ride"}),
+		    					new sap.ui.commons.TextView({text: ""}),
+		    					new sap.ui.commons.ProgressIndicator({
+		    						width: "200px", 
+		    						percentValue: 33, 
+		    						displayValue: "1m 22s"
+		    					}),
+		    					new sap.ui.commons.TextView({text: ""}),
+    				    	],
+    				    }),
+    				],
+    			}),	  			
+   				bottom: new sap.ui.commons.layout.BorderLayoutArea({
+   					contentAlign: "center",
+   					content: [
+   						new sap.ui.commons.Button({icon: "sap-icon://media-rewind"}),
+   						new sap.ui.commons.Button({icon: "sap-icon://media-play"}),
+   						new sap.ui.commons.Button({icon: "sap-icon://media-pause"}),
+   						new sap.ui.commons.Button({icon: "sap-icon://media-forward"}),
+   					],
+   				}),
+  			});
 			
 			var oShell = new sap.ui.ux3.Shell(
 					"myShell",
