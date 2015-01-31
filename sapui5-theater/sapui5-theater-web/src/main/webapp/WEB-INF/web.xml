@@ -24,12 +24,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		</init-param>
 		<init-param>
 			<param-name>org.apache.olingo.odata2.service.factory</param-name>
-			<param-value>com.sap.hana.cloud.odata.service.AlbumsListServiceFactory</param-value>
+			<param-value>com.sap.hana.cloud.odata.service.TheaterServiceFactory</param-value>
 		</init-param>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ODataServlet</servlet-name>
-		<url-pattern>/abumslist.svc/*</url-pattern>
+		<url-pattern>/theater.svc/*</url-pattern>
 	</servlet-mapping>
 </web-app>
