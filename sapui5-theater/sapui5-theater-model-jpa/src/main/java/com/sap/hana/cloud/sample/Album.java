@@ -22,7 +22,7 @@ public class Album implements Serializable {
 	private String review;
 	private String label;
 	private String rating;
-	private String year;
+	private String yearRelease;
 
 	public long getId() {
 		return id;
@@ -88,12 +88,12 @@ public class Album implements Serializable {
 		this.rating = param;
 	}
 
-	public String getYear() {
-		return year;
+	public String getYearRelease() {
+		return yearRelease;
 	}
 
-	public void setYear(String param) {
-		this.year = param;
+	public void setYearRelease(String param) {
+		this.yearRelease = param;
 	}
 
 }

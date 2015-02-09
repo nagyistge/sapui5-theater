@@ -8,7 +8,7 @@ import org.apache.olingo.odata2.jpa.processor.api.exception.ODataJPARuntimeExcep
 /**
  * Odata JPA Processor implementation class
  */
-public class AlbumsListServiceFactory extends ODataJPAServiceFactory {
+public class TheaterServiceFactory extends ODataJPAServiceFactory {
 	private static final String PERSISTENCE_UNIT_NAME = "sapui5-theater-model-jpa";
 
 	@Override
