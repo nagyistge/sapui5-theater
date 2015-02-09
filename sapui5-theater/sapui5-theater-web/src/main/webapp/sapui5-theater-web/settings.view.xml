@@ -21,6 +21,8 @@
 				<Label />
 				<Button text="Check settings" tooltip="Check settings" press="onCheckSettings"/>				
 			<core:Title text="Import data" />
+				<Label text="Test file" />
+				<FileUploader uploadOnChange="true" uploadUrl="../../../../../upload"/>
 				<Label />
 				<Button text="Import test data" tooltip="Import test data" press="onImportTestData"/>
 			<core:Title text="Album inspector" />
