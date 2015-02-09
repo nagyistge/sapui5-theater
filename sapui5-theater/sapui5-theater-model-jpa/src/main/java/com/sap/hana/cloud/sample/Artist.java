@@ -1,6 +1,8 @@
 package com.sap.hana.cloud.sample;
 
 import java.io.Serializable;
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +19,7 @@ public class Artist implements Serializable {
 	private long id;
 	private String name;
 	private String musicBrainzArtistID;
+	private Set<Album> albums;
 	
 	public long getId() {
 		return id;
@@ -40,6 +43,15 @@ public class Artist implements Serializable {
 
 	public void setMusicBrainzArtistID(String param) {
 		this.musicBrainzArtistID = param;
+	}
+	
+	@OneToMany
+	public Set<Album> getAlbums() {
+		return albums;
+	}
+
+	public void setAlbums(Set<Album> param) {
+		this.albums = param;
 	}
 
 }
