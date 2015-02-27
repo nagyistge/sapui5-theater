@@ -17,6 +17,7 @@ public class Album implements Serializable {
 	private long id;
 	private String title;
 	private String musicBrainzAlbumID;
+	@ManyToOne
 	private Artist artist;
 	private String compilation;
 	private String review;
@@ -48,7 +49,6 @@ public class Album implements Serializable {
 		this.musicBrainzAlbumID = param;
 	}
 
-	@ManyToOne
 	public Artist getArtist() {
 		return artist;
 	}

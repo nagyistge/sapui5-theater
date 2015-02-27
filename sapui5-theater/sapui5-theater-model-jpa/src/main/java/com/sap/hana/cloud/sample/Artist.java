@@ -19,6 +19,7 @@ public class Artist implements Serializable {
 	private long id;
 	private String name;
 	private String musicBrainzArtistID;
+	@OneToMany
 	private Set<Album> albums;
 	
 	public long getId() {
@@ -45,7 +46,6 @@ public class Artist implements Serializable {
 		this.musicBrainzArtistID = param;
 	}
 	
-	@OneToMany
 	public Set<Album> getAlbums() {
 		return albums;
 	}
