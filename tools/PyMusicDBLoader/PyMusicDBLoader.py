@@ -35,6 +35,16 @@ def get_albums(tree_root):
         albums[album.find('title').text] = album.find('musicBrainzAlbumID').text
     return albums
 
+def post_artists(svc_url, artists):
+    for artist in artists:
+        print artist, artists[artist]
+        artist_url = svc_url + "/Artists"
+        payload = {
+            "Name": artist,
+            "MusicBrainzArtistID": artists[artist],
+        }
+        r = s.post(artist_url, data=json.dumps(payload), headers=HEADERS)
+        print r.text, r.status_code
 
 if __name__ == '__main__':
     svc_url, fmusicdb, test_mode = get_param()
@@ -48,16 +58,10 @@ if __name__ == '__main__':
     print artists
     print albums
 
-    for artist in artists:
-        print artist, artists[artist]
-
-    artist_url = svc_url + "/Artists"
-    
-    r = s.post(artist_url, data=json.dumps(payload), headers=HEADERS)
+    post_artists(svc_url, artists)
 
     ###
 
-    artist_url = svc_url + "/Artists"
     album_url = svc_url + "/Albums"
 
     # r = s.post(artist_url, data=json.dumps(payload), headers=headers)
@@ -98,14 +102,3 @@ if __name__ == '__main__':
     #r = s.post(ref_url, data=json.dumps(payload), headers=headers)
     #print "Ref: %s" % r.status_code
     #print r.text
-
-
-    #tree = ET.parse('musicdb.xml')
-    #root = tree.getroot()
-    #print "Albums:"
-    #for album in root.findall('album'):
-    #    print '\t' + album.find('title').text
-    #print
-    #print "Artists:"
-    #for artist in root.findall('artist'):
-    #    print '\t' + artist.find('name').text + ' (' + artist.find('musicBrainzArtistID').text + ')'
