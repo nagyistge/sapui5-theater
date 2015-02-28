@@ -32,37 +32,71 @@ def get_artists(tree_root):
 def get_albums(tree_root):
     albums = {}
     for album in tree_root.findall('album'):
-        albums[album.find('title').text] = album.find('musicBrainzAlbumID').text
+        # albums[album.find('title').text] = album.find('musicBrainzAlbumID').text
+        albums[album.find('title').text] = album.find('artist').text
     return albums
 
-def post_artists(svc_url, artists):
+
+def post_artists(artist_url, artists):
+    artists_uri = {}
     for artist in artists:
-        print artist, artists[artist]
-        artist_url = svc_url + "/Artists"
+        # print artist, artists[artist]
         payload = {
             "Name": artist,
             "MusicBrainzArtistID": artists[artist],
         }
         r = s.post(artist_url, data=json.dumps(payload), headers=HEADERS)
+        # print r.text, r.status_code
+        ret = json.loads(r.text)
+        artists_uri[artist] = ret['d']['__metadata']['uri']
+    return artists_uri
+
+
+def post_albums(artists_uri, album_url, albums):
+    albums_uri = {}
+    for album in albums:
+        print album, albums[album]
+        payload = {
+            "Title": album,
+            # "Compilation": "False",
+            # "Label": "Unknown",
+            # "MusicBrainzAlbumID": "sdcds",
+            # "Rating": "5",
+            # "Review": "Nice album",
+            # "YearRelease": "2012",
+            "ArtistDetails": { "__metadata": { "uri": artists_uri[albums[album]] } },
+        }
+        print payload
+        r = s.post(album_url, data=json.dumps(payload), headers=HEADERS)
         print r.text, r.status_code
+        ret = json.loads(r.text)
+        albums_uri[album] = ret['d']['__metadata']['uri']
+        # new_url = albums_uri[album] + '/ArtistDetails/'
+        # print new_url
+        # print artists_uri[albums[album]]
+        # payload = {
+        #    "@odata.id": artists_uri[albums[album]],
+        # }
+        # r = s.post(new_url, data=json.dumps(payload), headers=HEADERS)
+        # print r.text, r.status_code
+    return albums_uri
+
 
 if __name__ == '__main__':
     svc_url, fmusicdb, test_mode = get_param()
     tree = ET.parse(fmusicdb)
     root = tree.getroot()
     s = requests.Session()
+    artist_url = svc_url + "/Artists"
+    album_url = svc_url + "/Albums"
 
     artists = get_artists(root)
     albums = get_albums(root)
 
-    print artists
-    print albums
-
-    post_artists(svc_url, artists)
+    artists_uri = post_artists(artist_url, artists)
+    albums_uri = post_albums(artists_uri, album_url, albums)
 
     ###
-
-    album_url = svc_url + "/Albums"
 
     # r = s.post(artist_url, data=json.dumps(payload), headers=headers)
     # print "Artist: %s" % r.status_code

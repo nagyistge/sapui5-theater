@@ -289,43 +289,6 @@
         </track>
     </album>
     <album>
-        <title>Young &amp; Beautiful (remix)</title>
-        <musicBrainzAlbumID>46853c75-a4a5-44d2-a9f8-9ae1c9dabb2f</musicBrainzAlbumID>
-        <artist>Lana Del Rey vs. Cédric Gervais</artist>
-        <genre>Progressive House</genre>
-        <style></style>
-        <mood></mood>
-        <theme></theme>
-        <compilation>false</compilation>
-        <review></review>
-        <type></type>
-        <releasedate></releasedate>
-        <label>Spinnin&apos; Records</label>
-        <type></type>
-        <thumb preview="http://www.theaudiodb.com/images/media/album/thumb/utqxyw1387659613.jpg/preview">http://www.theaudiodb.com/images/media/album/thumb/utqxyw1387659613.jpg</thumb>
-        <path>smb://DS1511/Music/Lana Del Rey/Young &amp; Beautiful (Remix)/</path>
-        <rating>-1</rating>
-        <year>2013</year>
-        <albumArtistCredits>
-            <artist>Lana Del Rey</artist>
-            <musicBrainzArtistID>b7539c32-53e7-4908-bda3-81449c367da6</musicBrainzArtistID>
-            <joinphrase> vs. </joinphrase>
-            <featuring>Lana Del Rey</featuring>
-        </albumArtistCredits>
-        <albumArtistCredits>
-            <artist>Cédric Gervais</artist>
-            <musicBrainzArtistID>c9073012-4547-4a72-8963-738d9f8503cc</musicBrainzArtistID>
-            <joinphrase></joinphrase>
-            <featuring>Cédric Gervais</featuring>
-        </albumArtistCredits>
-        <track>
-            <musicBrainzTrackID></musicBrainzTrackID>
-            <title>Young &amp; Beautiful (remix)</title>
-            <position>1</position>
-            <duration>07:01</duration>
-        </track>
-    </album>
-    <album>
         <title>Birdy</title>
         <musicBrainzAlbumID>ea063e74-e123-4d3d-9288-fe1ec479da9f</musicBrainzAlbumID>
         <artist>Birdy</artist>
