@@ -2,6 +2,7 @@ package com.sap.hana.cloud.sample;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.*;
 
@@ -13,6 +14,7 @@ public class Artist {
 	private static final long serialVersionUID = 1L;
 
 	public Artist() {
+		this.albums = new ArrayList<Album>();
 	}
 
 	@Id
@@ -20,7 +22,7 @@ public class Artist {
 	private long id;
 	private String name;
 	private String musicBrainzArtistID;
-	@OneToMany(mappedBy="artist")
+	@OneToMany(mappedBy="artist", fetch = FetchType.EAGER)
 	private List<Album> albums;
 	
 	public long getId() {

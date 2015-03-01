@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import com.sap.hana.cloud.odata.service.JpaEntityManagerFactory;
 import com.sap.hana.cloud.sample.Theme;
 
 public class Main {
@@ -11,15 +12,12 @@ public class Main {
 	private static EntityManagerFactory factory;
 	
 	public static void main(String[] args) {
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		EntityManager em = factory.createEntityManager();
-		em.getTransaction().begin();
-		Theme theme = new Theme();
-		theme.setTheme("Youuuu");
-		em.persist(theme);
-		em.getTransaction().commit();
-		em.close();
-		System.out.println("***");
+		try {
+			EntityManagerFactory emf = JpaEntityManagerFactory.getEntityManagerFactory();
+			System.out.println("***");
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
