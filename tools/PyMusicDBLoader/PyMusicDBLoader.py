@@ -68,7 +68,7 @@ def post_albums(artists_uri, album_url, albums):
         }
         print payload
         r = s.post(album_url, data=json.dumps(payload), headers=HEADERS)
-        print r.text, r.status_code
+        print r.status_code, r.text
         ret = json.loads(r.text)
         albums_uri[album] = ret['d']['__metadata']['uri']
         # new_url = albums_uri[album] + '/ArtistDetails/'
@@ -95,44 +95,3 @@ if __name__ == '__main__':
 
     artists_uri = post_artists(artist_url, artists)
     albums_uri = post_albums(artists_uri, album_url, albums)
-
-    ###
-
-    # r = s.post(artist_url, data=json.dumps(payload), headers=headers)
-    # print "Artist: %s" % r.status_code
-
-    payload = {
-        "Compilation": "False",
-        "Label": "Unknown",
-        "MusicBrainzAlbumID": "sdcds",
-        "Rating": "5",
-        "Review": "Nice album",
-        "Title": "Born to die",
-        "YearRelease": "2012",
-    }
-
-    #r = s.post(album_url, data=json.dumps(payload), headers=headers)
-    #print "Album1: %s" % r.status_code
-
-    payload = {
-        "Compilation": "False",
-        "Label": "Unknown",
-        "MusicBrainzAlbumID": "sdcds",
-        "Rating": "5",
-        "Review": "Another nice album",
-        "Title": "Ultraviolence",
-        "YearRelease": "2014",
-    }
-
-    #r = s.post(album_url, data=json.dumps(payload), headers=headers)
-    #print "Album2: %s" % r.status_code
-
-    ref_url = album_url + "/Albums(4L)/Artist/$ref"
-
-    payload = {
-        "@odata.id": "Artist(1L)"
-    }
-
-    #r = s.post(ref_url, data=json.dumps(payload), headers=headers)
-    #print "Ref: %s" % r.status_code
-    #print r.text
