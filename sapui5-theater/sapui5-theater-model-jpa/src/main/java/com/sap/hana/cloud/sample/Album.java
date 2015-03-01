@@ -5,7 +5,8 @@ import javax.persistence.*;
 
 @Entity
 @NamedQuery(name = "AllAlbums", query = "select a from Album a")
-public class Album implements Serializable {
+//public class Album implements Serializable {
+public class Album {
 
 	private static final long serialVersionUID = 1L;
 

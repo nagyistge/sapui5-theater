@@ -1,13 +1,14 @@
 package com.sap.hana.cloud.sample;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Collection;
 
 import javax.persistence.*;
 
 @Entity
 @NamedQuery(name = "AllArtists", query = "select a from Artist a")
-public class Artist implements Serializable {
+//public class Artist implements Serializable {
+public class Artist {
 
 	private static final long serialVersionUID = 1L;
 
@@ -19,8 +20,8 @@ public class Artist implements Serializable {
 	private long id;
 	private String name;
 	private String musicBrainzArtistID;
-	@OneToMany
-	private Set<Album> albums;
+	@OneToMany(mappedBy="artist")
+	private Collection<Album> albums;
 	
 	public long getId() {
 		return id;
@@ -46,12 +47,14 @@ public class Artist implements Serializable {
 		this.musicBrainzArtistID = param;
 	}
 	
-	public Set<Album> getAlbums() {
+	public Collection<Album> getAlbums() {
 		return albums;
 	}
 
-	public void setAlbums(Set<Album> param) {
-		this.albums = param;
+	public void addAlbum(Album param) {
+		if (!this.albums.contains(param)) {
+			this.albums.add(param);
+		}
 	}
 
 }
