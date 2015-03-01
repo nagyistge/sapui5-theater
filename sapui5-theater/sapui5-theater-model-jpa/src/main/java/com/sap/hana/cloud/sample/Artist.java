@@ -1,7 +1,7 @@
 package com.sap.hana.cloud.sample;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -21,7 +21,7 @@ public class Artist {
 	private String name;
 	private String musicBrainzArtistID;
 	@OneToMany(mappedBy="artist")
-	private Collection<Album> albums;
+	private List<Album> albums;
 	
 	public long getId() {
 		return id;
@@ -47,14 +47,12 @@ public class Artist {
 		this.musicBrainzArtistID = param;
 	}
 	
-	public Collection<Album> getAlbums() {
+	public List<Album> getAlbums() {
 		return albums;
 	}
 
-	public void addAlbum(Album param) {
-		if (!this.albums.contains(param)) {
-			this.albums.add(param);
-		}
+	public void setAlbum(List<Album> param) {
+		this.albums = param;
 	}
 
 }
