@@ -20,6 +20,7 @@ public class DataLoader {
 	}
 	
 	public void loadData() {
+		System.out.println("--> DataLoader");
 		loadArtists();
 		logger.info("Yop");
 	}

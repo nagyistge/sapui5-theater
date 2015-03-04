@@ -3,11 +3,13 @@ package com.sap.hana.cloud.odata.service;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.sql.DataSource;
+
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 
 /**
@@ -30,6 +32,7 @@ public class JpaEntityManagerFactory {
 	 */
 	public static synchronized EntityManagerFactory getEntityManagerFactory()
 			throws NamingException, SQLException {
+		System.out.println("--> EntityManagerFactory");
 		if (entityManagerFactory == null) {
 			InitialContext ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup(DATA_SOURCE_NAME);

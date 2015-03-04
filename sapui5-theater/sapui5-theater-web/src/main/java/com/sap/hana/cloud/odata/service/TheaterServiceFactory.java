@@ -1,6 +1,7 @@
 package com.sap.hana.cloud.odata.service;
 
 import javax.persistence.EntityManagerFactory;
+
 import org.apache.olingo.odata2.jpa.processor.api.ODataJPAContext;
 import org.apache.olingo.odata2.jpa.processor.api.ODataJPAServiceFactory;
 import org.apache.olingo.odata2.jpa.processor.api.exception.ODataJPARuntimeException;
@@ -14,6 +15,7 @@ public class TheaterServiceFactory extends ODataJPAServiceFactory {
 	@Override
 	public ODataJPAContext initializeODataJPAContext()
 			throws ODataJPARuntimeException {
+		System.out.println("--> ServiceFactory");
 		ODataJPAContext oDataJPAContext = this.getODataJPAContext();
 		try {
 			EntityManagerFactory emf = JpaEntityManagerFactory
