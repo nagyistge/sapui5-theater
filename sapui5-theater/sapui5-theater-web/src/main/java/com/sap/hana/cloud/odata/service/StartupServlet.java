@@ -8,6 +8,9 @@ import com.sap.hana.cloud.sample.data.DataLoader;
 
 public class StartupServlet extends HttpServlet {
 	
+	private static final long serialVersionUID = 1L;
+	private static EntityManagerFactory emf;
+	
 	@Override
 	public void init() throws ServletException {
 		try {
