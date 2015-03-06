@@ -1,4 +1,4 @@
-package com.sap.hana.cloud.sample.data;
+package com.sapui5theater.model.data;
 
 import javax.persistence.EntityManagerFactory;
 

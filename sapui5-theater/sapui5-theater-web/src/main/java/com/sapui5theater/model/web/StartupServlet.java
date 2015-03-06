@@ -1,10 +1,10 @@
-package com.sap.hana.cloud.odata.service;
+package com.sapui5theater.model.web;
 
 import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import com.sap.hana.cloud.sample.data.DataLoader;
+import com.sapui5theater.model.data.DataLoader;
 
 public class StartupServlet extends HttpServlet {
 	

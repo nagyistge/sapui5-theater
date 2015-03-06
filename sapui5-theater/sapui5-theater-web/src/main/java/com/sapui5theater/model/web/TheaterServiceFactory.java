@@ -1,4 +1,4 @@
-package com.sap.hana.cloud.odata.service;
+package com.sapui5theater.model.web;
 
 import javax.persistence.EntityManagerFactory;
 

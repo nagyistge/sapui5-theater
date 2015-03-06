@@ -1,4 +1,4 @@
-package com.sap.hana.cloud.odata.service;
+package com.sapui5theater.model.web;
 
 import java.sql.SQLException;
 import java.util.HashMap;

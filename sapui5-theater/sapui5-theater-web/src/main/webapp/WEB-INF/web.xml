@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
-	<display-name>personslist-web</display-name>
+	<display-name>sapui5-theater-web</display-name>
 	<!-- Enable usage of Cloud persistence service -->
 	<resource-ref>
 		<res-ref-name>jdbc/DefaultDB</res-ref-name>
@@ -24,7 +24,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		</init-param>
 		<init-param>
 			<param-name>org.apache.olingo.odata2.service.factory</param-name>
-			<param-value>com.sap.hana.cloud.odata.service.TheaterServiceFactory</param-value>
+			<param-value>com.sapui5theater.model.web.TheaterServiceFactory</param-value>
 		</init-param>
 		<load-on-startup>2</load-on-startup>
 	</servlet>
@@ -37,7 +37,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<description></description>
 		<display-name>StartupServlet</display-name>
 		<servlet-name>StartupServlet</servlet-name>
-		<servlet-class>com.sap.hana.cloud.odata.service.StartupServlet</servlet-class>
+		<servlet-class>com.sapui5theater.model.web.StartupServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 </web-app>

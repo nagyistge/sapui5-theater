@@ -1,4 +1,4 @@
-package com.sap.hana.cloud.sample;
+package com.sapui5theater.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
