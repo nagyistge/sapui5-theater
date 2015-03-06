@@ -44,12 +44,16 @@ public class XMLParser {
 			in = getResourceAsInputStream(aXml);
 			eventReader = inputFactory.createXMLEventReader(in);
 			Artist art = null;
+			//TODO: check is the level cannot be given by the lib
+			int level = 0;
 			while (eventReader.hasNext()) {
 				XMLEvent event = eventReader.nextEvent();
 				if (event.isStartElement()) {
+					level += 1;
 					StartElement startElement = event.asStartElement();
-					if (startElement.getName().getLocalPart() == (ARTIST)) {
+					if (startElement.getName().getLocalPart() == (ARTIST) && level == 2) {
 						art = new Artist();
+						System.out.println(level);
 					}
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(NAME)) {
@@ -59,9 +63,10 @@ public class XMLParser {
 						continue;
 					}
 					if (event.asStartElement().getName().getLocalPart()
-							.equals(MUSICBRAINZARTISTID)) {
+							.equals(MUSICBRAINZARTISTID) && level == 3) {
 						event = eventReader.nextEvent();
 						art.setMusicBrainzArtistID(getEvent(event));
+						System.out.println(getEvent(event));
 						continue;
 					}
 				}
@@ -69,15 +74,17 @@ public class XMLParser {
 				// If we reach the end of an item element we add it to the list
 				if (event.isEndElement()) {
 					EndElement endElement = event.asEndElement();
-					if (endElement.getName().getLocalPart() == (ARTIST)) {
+					if (endElement.getName().getLocalPart() == (ARTIST) && level == 2) {
+						System.out.println(level);
 						em.persist(art);
 						artists.add(art);
 						System.out.println("Persisted!!!");
 					}
+					level -= 1;
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Exception occured" + e.toString());
+			System.out.println("Exception occured2" + e.toString());
 			logger.error("Exception occured", e);
 			status = false;
 		} finally {

@@ -6,10 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 
+//TODO: implement logging and where to read the logs?
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sapui5theater.model.data.XMLParser;
+
 import com.sapui5theater.model.Artist;
 
 public class DataLoader {
@@ -28,8 +29,19 @@ public class DataLoader {
 		TypedQuery<Artist> queryA;
 		List<Artist> resA;
 		//TODO: check if there is already data in the table
-		new XMLParser().readArtists(em,
-				"com/sapui5theater/model/data/musicdb-test.xml");
+		try {
+			em.getTransaction().begin();
+			new XMLParser().readArtists(em,
+					"com/sapui5theater/model/data/musicdb-test.xml");
+			em.getTransaction().commit();
+			System.out.println("*** COMMIT ***");
+			
+		} catch (Exception e) {
+			System.out.println("Exception occured3" + e);
+			logger.error("Exception occured", e);
+		} finally {
+			em.close();
+		}
 	}
 	
 	public void loadData() {
