@@ -1,10 +1,11 @@
 package com.sap.hana.cloud.sample;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name = "AllAlbums", query = "select a from Album a")
+@NamedQuery(name = "AllAlbums", query = "select al from Album al")
 //public class Album implements Serializable {
 public class Album {
 
@@ -15,10 +16,12 @@ public class Album {
 
 	@Id
 	@GeneratedValue
-	private long id;
+	@Column(name = "ALBUM_ID")
+	private long albumId;
 	private String title;
 	private String musicBrainzAlbumID;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ARTIST", referencedColumnName = "ARTIST_ID")
 	private Artist artist;
 	private String compilation;
 	private String review;
@@ -26,12 +29,12 @@ public class Album {
 	private String rating;
 	private String yearRelease;
 
-	public long getId() {
-		return id;
+	public long getAlbumId() {
+		return albumId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setAlbumId(long albumId) {
+		this.albumId = albumId;
 	}
 
 	public String getTitle() {

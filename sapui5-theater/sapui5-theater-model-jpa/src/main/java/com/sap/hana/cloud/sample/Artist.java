@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name = "AllArtists", query = "select a from Artist a")
+@NamedQuery(name = "AllArtists", query = "select ar from Artist ar")
 //public class Artist implements Serializable {
 public class Artist {
 
@@ -19,18 +19,19 @@ public class Artist {
 
 	@Id
 	@GeneratedValue
-	private long id;
+	@Column(name = "ARTIST_ID")
+	private long artistId;
 	private String name;
 	private String musicBrainzArtistID;
-	@OneToMany(mappedBy="artist", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "artist", fetch = FetchType.EAGER)
 	private List<Album> albums;
 	
-	public long getId() {
-		return id;
+	public long getArtistId() {
+		return artistId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setArtistId(long artistId) {
+		this.artistId = artistId;
 	}
 
 	public String getName() {

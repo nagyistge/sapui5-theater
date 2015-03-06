@@ -4,7 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name = "AllAlbums", query = "select a from Album a")
+@NamedQuery(name = "AllTracks", query = "select t from Track t")
 public class Track implements Serializable {
 
 	private static final long serialVersionUID = 1L;
