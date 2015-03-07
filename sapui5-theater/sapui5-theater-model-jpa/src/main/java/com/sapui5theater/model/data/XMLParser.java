@@ -26,6 +26,7 @@ public class XMLParser {
 	static final String MUSICBRAINZARTISTID = "musicBrainzArtistID";
 	static final String ALBUM = "album";
 	static final String TITLE = "title";
+	static final String COMPILATION = "compilation";
 	static final String MUSICBRAINZALBUMID = "musicBrainzAlbumID";
 	
 	static Logger logger = LoggerFactory.getLogger(XMLParser.class);
@@ -152,6 +153,12 @@ public class XMLParser {
 						System.out.println("Index of artist: " + art.getArtistId());
 						continue;
 					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(COMPILATION)) {
+						event = eventReader.nextEvent();
+						alb.setCompilation(Boolean.valueOf(getEvent(event)));;
+						continue;
+					}					
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(MUSICBRAINZALBUMID) && level == 3) {
 						event = eventReader.nextEvent();

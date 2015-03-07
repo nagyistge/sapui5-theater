@@ -23,7 +23,7 @@ public class Album {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ARTIST", referencedColumnName = "ARTIST_ID")
 	private Artist artist;
-	private String compilation;
+	private Boolean compilation;
 	private String review;
 	private String label;
 	private String rating;
@@ -61,11 +61,11 @@ public class Album {
 		this.artist = param;
 	}
 
-	public String getCompilation() {
+	public Boolean getCompilation() {
 		return compilation;
 	}
 
-	public void setCompilation(String param) {
+	public void setCompilation(Boolean param) {
 		this.compilation = param;
 	}
 
