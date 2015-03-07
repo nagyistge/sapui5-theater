@@ -23,7 +23,7 @@ public class DataLoader {
 		this.emf = emf;
 	}
 	
-	public List<Artist> loadArtists() {
+	public void loadArtists() {
 		System.out.println("--> Loading artists");
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Artist> queryAr;
@@ -45,11 +45,9 @@ public class DataLoader {
 		} finally {
 			em.close();
 		}
-		
-		return resAr;
 	}
 	
-	public void loadAlbums(List<Artist> artists) {
+	public void loadAlbums() {
 		System.out.println("--> Loading albums");
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Album> queryAl;
@@ -58,8 +56,7 @@ public class DataLoader {
 		try {
 			em.getTransaction().begin();
 			new XMLParser().readAlbums(em,
-					"com/sapui5theater/model/data/musicdb-test.xml", 
-					artists);
+					"com/sapui5theater/model/data/musicdb-test.xml");
 			em.getTransaction().commit();
 			queryAl = em.createQuery("SELECT al FROM Album al", 
 					Album.class);
@@ -72,13 +69,12 @@ public class DataLoader {
 		} finally {
 			em.close();
 		}
-		
 	}
 	
 	public void loadData() {
 		System.out.println("--> DataLoader");
-		List<Artist> artists = loadArtists();
-		loadAlbums(artists);
+		loadArtists();
+		loadAlbums();
 	}
 
 }

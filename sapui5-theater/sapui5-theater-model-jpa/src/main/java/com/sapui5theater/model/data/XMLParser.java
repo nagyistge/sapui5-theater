@@ -118,7 +118,7 @@ public class XMLParser {
 	 * @return Parsed List of Albums
 	 */
 	//TODO: rename aXml to alXml (for artist and album)
-	public List<Album> readAlbums(EntityManager em, String aXml, List<Artist> artists) {
+	public List<Album> readAlbums(EntityManager em, String aXml) {
 		System.out.println("--> Reading albums ...");
 		ArrayList<Album> albums = new ArrayList<Album>();
 		try {
