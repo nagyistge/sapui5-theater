@@ -27,6 +27,7 @@ public class XMLParser {
 	static final String ALBUM = "album";
 	static final String TITLE = "title";
 	static final String COMPILATION = "compilation";
+	static final String REVIEW = "review";
 	static final String MUSICBRAINZALBUMID = "musicBrainzAlbumID";
 	
 	static Logger logger = LoggerFactory.getLogger(XMLParser.class);
@@ -157,6 +158,13 @@ public class XMLParser {
 							.equals(COMPILATION)) {
 						event = eventReader.nextEvent();
 						alb.setCompilation(Boolean.valueOf(getEvent(event)));;
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(REVIEW)) {
+						event = eventReader.nextEvent();
+						alb.setReview(getEvent(event).substring(0, Math.min(getEvent(event).length(), 255)));
+						//TODO: manager longer review fields
 						continue;
 					}					
 					if (event.asStartElement().getName().getLocalPart()
