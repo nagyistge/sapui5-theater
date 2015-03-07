@@ -26,9 +26,10 @@ public class XMLParser {
 	static final String MUSICBRAINZARTISTID = "musicBrainzArtistID";
 	static final String ALBUM = "album";
 	static final String TITLE = "title";
+	static final String MUSICBRAINZALBUMID = "musicBrainzAlbumID";	
 	static final String COMPILATION = "compilation";
 	static final String REVIEW = "review";
-	static final String MUSICBRAINZALBUMID = "musicBrainzAlbumID";
+	static final String LABEL = "label";
 	
 	static Logger logger = LoggerFactory.getLogger(XMLParser.class);
 	
@@ -145,6 +146,13 @@ public class XMLParser {
 						continue;
 					}
 					if (event.asStartElement().getName().getLocalPart()
+							.equals(MUSICBRAINZALBUMID) && level == 3) {
+						event = eventReader.nextEvent();
+						alb.setMusicBrainzAlbumID(getEvent(event));
+						System.out.println(getEvent(event));
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
 							.equals(ARTIST) && level == 3) {
 						event = eventReader.nextEvent();
 						System.out.println(getEvent(event));
@@ -166,12 +174,11 @@ public class XMLParser {
 						alb.setReview(getEvent(event).substring(0, Math.min(getEvent(event).length(), 255)));
 						//TODO: manager longer review fields
 						continue;
-					}					
+					}
 					if (event.asStartElement().getName().getLocalPart()
-							.equals(MUSICBRAINZALBUMID) && level == 3) {
+							.equals(LABEL)) {
 						event = eventReader.nextEvent();
-						alb.setMusicBrainzAlbumID(getEvent(event));
-						System.out.println(getEvent(event));
+						alb.setLabel(getEvent(event));
 						continue;
 					}
 				}

@@ -17,6 +17,7 @@ public class Artist {
 		this.albums = new ArrayList<Album>();
 	}
 
+	//TODO: change the key numbering
 	@Id
 	@GeneratedValue
 	@Column(name = "ARTIST_ID")
