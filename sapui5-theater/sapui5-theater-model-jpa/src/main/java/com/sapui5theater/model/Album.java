@@ -26,7 +26,7 @@ public class Album {
 	private Boolean compilation;
 	private String review;
 	private String label;
-	private String rating;
+	private int rating;
 	private String yearRelease;
 
 	public long getAlbumId() {
@@ -85,11 +85,11 @@ public class Album {
 		this.label = param;
 	}
 
-	public String getRating() {
+	public int getRating() {
 		return rating;
 	}
 
-	public void setRating(String param) {
+	public void setRating(int param) {
 		this.rating = param;
 	}
 

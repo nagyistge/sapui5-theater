@@ -30,6 +30,7 @@ public class XMLParser {
 	static final String COMPILATION = "compilation";
 	static final String REVIEW = "review";
 	static final String LABEL = "label";
+	static final String RATING = "rating";
 	
 	static Logger logger = LoggerFactory.getLogger(XMLParser.class);
 	
@@ -178,7 +179,16 @@ public class XMLParser {
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(LABEL)) {
 						event = eventReader.nextEvent();
-						alb.setLabel(getEvent(event));
+						System.out.println("Truc bizare: " + event.isEndElement());
+						if (!event.isEndElement()) {
+							alb.setLabel(getEvent(event));
+							continue;
+						}
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(RATING)) {
+						event = eventReader.nextEvent();
+						alb.setRating(Integer.parseInt(getEvent(event)));;
 						continue;
 					}
 				}
