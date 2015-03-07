@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.sapui5theater.model.Artist;
+import com.sapui5theater.model.Album;
 
 public class DataLoader {
 	
@@ -33,14 +34,13 @@ public class DataLoader {
 			new XMLParser().readArtists(em,
 					"com/sapui5theater/model/data/musicdb-test.xml");
 			em.getTransaction().commit();
-			System.out.println("*** COMMIT ***");
 			queryAr = em.createQuery("SELECT ar FROM Artist ar", 
 					Artist.class);
 			resAr = queryAr.getResultList();
 			System.out.println("Number of artists: " + resAr.size());
 			
 		} catch (Exception e) {
-			System.out.println("Exception occuredLA" + e);
+			System.out.println("Exception occuredLAr" + e);
 			logger.error("Exception occured", e);
 		} finally {
 			em.close();
@@ -50,6 +50,28 @@ public class DataLoader {
 	}
 	
 	public void loadAlbums(List<Artist> artists) {
+		System.out.println("--> Loading albums");
+		EntityManager em = emf.createEntityManager();
+		TypedQuery<Album> queryAl;
+		List<Album> resAl = null; 
+		//TODO: check if there is already data in the table
+		try {
+			em.getTransaction().begin();
+			new XMLParser().readAlbums(em,
+					"com/sapui5theater/model/data/musicdb-test.xml", 
+					artists);
+			em.getTransaction().commit();
+			queryAl = em.createQuery("SELECT al FROM Album al", 
+					Album.class);
+			resAl = queryAl.getResultList();
+			System.out.println("Number of albums: " + resAl.size());
+			
+		} catch (Exception e) {
+			System.out.println("Exception occuredLAl" + e);
+			logger.error("Exception occured", e);
+		} finally {
+			em.close();
+		}
 		
 	}
 	

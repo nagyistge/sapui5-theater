@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.sapui5theater.model.Artist;
+import com.sapui5theater.model.Album;
 
 public class XMLParser {
 	static final String ARTIST = "artist";
@@ -103,6 +104,18 @@ public class XMLParser {
 		}
 		
 		return artists;
+	}
+	
+	/**
+	 * Parse Albums and fill List
+	 * 
+	 * @param aXml
+	 * @return Parsed List of Albums
+	 */
+	public List<Album> readAlbums(EntityManager em, String aXml, List<Artist> artists) {
+		System.out.println("--> Reading albums ...");
+		ArrayList<Album> albums = new ArrayList<Album>();
+		return albums;
 	}
 	
 	/**
