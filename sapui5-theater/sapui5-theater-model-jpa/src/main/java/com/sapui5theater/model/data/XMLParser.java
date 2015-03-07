@@ -24,6 +24,9 @@ public class XMLParser {
 	static final String ARTIST = "artist";
 	static final String NAME = "name";
 	static final String MUSICBRAINZARTISTID = "musicBrainzArtistID";
+	static final String ALBUM = "album";
+	static final String TITLE = "title";
+	static final String MUSICBRAINZALBUMID = "musicBrainzAlbumID";
 	
 	static Logger logger = LoggerFactory.getLogger(XMLParser.class);
 	
@@ -50,7 +53,7 @@ public class XMLParser {
 			while (eventReader.hasNext()) {
 				XMLEvent event = eventReader.nextEvent();
 				if (event.isStartElement()) {
-					level += 1;
+					level++;
 					StartElement startElement = event.asStartElement();
 					if (startElement.getName().getLocalPart() == (ARTIST) && level == 2) {
 						art = new Artist();
@@ -81,11 +84,11 @@ public class XMLParser {
 						artists.add(art);
 						System.out.println("Persisted!!!");
 					}
-					level -= 1;
+					level--;
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Exception occured2" + e.toString());
+			System.out.println("Exception occuredRAr" + e.toString());
 			logger.error("Exception occured", e);
 			status = false;
 		} finally {
@@ -112,9 +115,83 @@ public class XMLParser {
 	 * @param aXml
 	 * @return Parsed List of Albums
 	 */
+	//TODO: rename aXml to alXml (for artist and album)
 	public List<Album> readAlbums(EntityManager em, String aXml, List<Artist> artists) {
 		System.out.println("--> Reading albums ...");
 		ArrayList<Album> albums = new ArrayList<Album>();
+		try {
+			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+			in = getResourceAsInputStream(aXml);
+			eventReader = inputFactory.createXMLEventReader(in);
+			Album alb = null;
+			//TODO: check is the level cannot be given by the lib
+			int level = 0;
+			while (eventReader.hasNext()) {
+				XMLEvent event = eventReader.nextEvent();
+				if (event.isStartElement()) {
+					level++;				
+					StartElement startElement = event.asStartElement();
+					if (startElement.getName().getLocalPart() == (ALBUM) && level == 2) {
+						alb = new Album();
+						System.out.println(level);
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(TITLE) && level == 3) {
+						event = eventReader.nextEvent();
+						alb.setTitle(getEvent(event));
+						System.out.println(getEvent(event));
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(ARTIST) && level == 3) {
+						event = eventReader.nextEvent();
+						System.out.println(getEvent(event));
+						Artist art = em.createQuery("SELECT ar FROM Artist ar WHERE ar.name = :artist", Artist.class)
+								.setParameter("artist", getEvent(event)).getSingleResult();
+						alb.setArtist(art);
+						System.out.println("Index of artist: " + art.getArtistId());
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(MUSICBRAINZALBUMID) && level == 3) {
+						event = eventReader.nextEvent();
+						alb.setMusicBrainzAlbumID(getEvent(event));
+						System.out.println(getEvent(event));
+						continue;
+					}
+				}
+				
+				// If we reach the end of an item element we add it to the list
+				if (event.isEndElement()) {
+					EndElement endElement = event.asEndElement();
+					if (endElement.getName().getLocalPart() == (ALBUM) && level == 2) {
+						System.out.println(level);
+						em.persist(alb);
+						albums.add(alb);
+						System.out.println("Persisted!!!");
+					}
+					level--;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Exception occuredRAr" + e.toString());
+			logger.error("Exception occured", e);
+			status = false;
+		} finally {
+			try {
+				in.close();
+				eventReader.close();
+			} catch (IOException e) {
+				System.out.println("IO Exception occured" + e.toString());
+				logger.error("IO Exception occured", e);
+				status = false;
+			} catch (XMLStreamException e) {
+				System.out.println("XMLStream exception occured" + e.toString());
+				logger.error("XMLStream exception occured", e);
+				status = false;
+			}
+		}
+
 		return albums;
 	}
 	
