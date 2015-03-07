@@ -32,7 +32,6 @@ public class JpaEntityManagerFactory {
 	 */
 	public static synchronized EntityManagerFactory getEntityManagerFactory()
 			throws NamingException, SQLException {
-		System.out.println("--> EntityManagerFactory");
 		if (entityManagerFactory == null) {
 			InitialContext ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup(DATA_SOURCE_NAME);

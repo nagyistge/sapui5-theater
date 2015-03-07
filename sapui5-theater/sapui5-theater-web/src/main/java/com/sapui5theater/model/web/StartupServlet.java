@@ -13,7 +13,6 @@ public class StartupServlet extends HttpServlet {
 	
 	@Override
 	public void init() throws ServletException {
-		System.out.println("--> Startup");
 		try {
 			emf = JpaEntityManagerFactory.getEntityManagerFactory();
 			DataLoader loader = new DataLoader(emf);
