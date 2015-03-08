@@ -28,6 +28,9 @@ public class Album {
 	private String label;
 	private int rating;
 	private int yearRelease;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "GENRE", referencedColumnName = "GENRE_ID")
+	private Genre genre;
 
 	public long getAlbumId() {
 		return albumId;
@@ -99,6 +102,14 @@ public class Album {
 
 	public void setYearRelease(int param) {
 		this.yearRelease = param;
+	}
+	
+	public Genre getGenre() {
+		return genre;
+	}
+
+	public void setGenre(Genre param) {
+		this.genre = param;
 	}
 
 }

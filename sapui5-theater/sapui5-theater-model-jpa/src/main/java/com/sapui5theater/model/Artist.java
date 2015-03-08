@@ -26,6 +26,9 @@ public class Artist {
 	private String musicBrainzArtistID;
 	@OneToMany(mappedBy = "artist", fetch = FetchType.EAGER)
 	private List<Album> albums;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "GENRE", referencedColumnName = "GENRE_ID")
+	private Genre genre;
 	
 	public long getArtistId() {
 		return artistId;
@@ -55,8 +58,16 @@ public class Artist {
 		return albums;
 	}
 
-	public void setAlbum(List<Album> param) {
+	public void setAlbums(List<Album> param) {
 		this.albums = param;
+	}
+	
+	public Genre getGenre() {
+		return genre;
+	}
+
+	public void setGenre(Genre param) {
+		this.genre = param;
 	}
 
 }
