@@ -179,11 +179,12 @@ public class XMLParser {
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(LABEL)) {
 						event = eventReader.nextEvent();
-						System.out.println("Truc bizare: " + event.isEndElement());
 						if (!event.isEndElement()) {
 							alb.setLabel(getEvent(event));
-							continue;
+						} else {
+							level--;
 						}
+						continue;
 					}
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(RATING)) {
