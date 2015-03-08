@@ -27,7 +27,7 @@ public class Album {
 	private String review;
 	private String label;
 	private int rating;
-	private String yearRelease;
+	private int yearRelease;
 
 	public long getAlbumId() {
 		return albumId;
@@ -93,11 +93,11 @@ public class Album {
 		this.rating = param;
 	}
 
-	public String getYearRelease() {
+	public int getYearRelease() {
 		return yearRelease;
 	}
 
-	public void setYearRelease(String param) {
+	public void setYearRelease(int param) {
 		this.yearRelease = param;
 	}
 

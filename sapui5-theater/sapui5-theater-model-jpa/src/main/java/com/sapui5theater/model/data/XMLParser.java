@@ -31,6 +31,7 @@ public class XMLParser {
 	static final String REVIEW = "review";
 	static final String LABEL = "label";
 	static final String RATING = "rating";
+	static final String YEAR = "year";
 	
 	static Logger logger = LoggerFactory.getLogger(XMLParser.class);
 	
@@ -189,7 +190,13 @@ public class XMLParser {
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(RATING)) {
 						event = eventReader.nextEvent();
-						alb.setRating(Integer.parseInt(getEvent(event)));;
+						alb.setRating(Integer.parseInt(getEvent(event)));
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(YEAR)) {
+						event = eventReader.nextEvent();
+						alb.setYearRelease(Integer.parseInt(getEvent(event)));
 						continue;
 					}
 				}
