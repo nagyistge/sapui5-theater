@@ -21,6 +21,8 @@ import com.sapui5theater.model.Genre;
 import com.sapui5theater.model.Artist;
 import com.sapui5theater.model.Album;
 
+//TODO: remove list arrays ... they are not used
+
 public class XMLParser {
 	static final String GENRE = "genre";
 	static final String ARTIST = "artist";
@@ -47,48 +49,38 @@ public class XMLParser {
 	 * @param gXml
 	 * @return Parsed List of Genres
 	 */
-	public List<Genre> readGenres(EntityManager em, String aXml) {
-		System.out.println("--> Reading artists ...");
-		ArrayList<Genre> genres = new ArrayList<Genre>();
+	public void readGenres(EntityManager em, String aXml) {
+		System.out.println("--> Reading genres ...");
+		ArrayList<String> genres = new ArrayList<String>();
 		try {
 			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
 			in = getResourceAsInputStream(aXml);
 			eventReader = inputFactory.createXMLEventReader(in);
 			Genre gen = null;
 			//TODO: check is the level cannot be given by the lib
-			int level = 0;
 			while (eventReader.hasNext()) {
 				XMLEvent event = eventReader.nextEvent();
 				if (event.isStartElement()) {
-					level++;
 					StartElement startElement = event.asStartElement();
-					if (startElement.getName().getLocalPart() == (GENRE) && level == 2) {
-						gen = new Genre();
-						System.out.println(level);
-					}
-					if (event.asStartElement().getName().getLocalPart()
-							.equals(NAME)) {
+					if (startElement.getName().getLocalPart() == (GENRE)) {
 						event = eventReader.nextEvent();
-						gen.setGenre(getEvent(event));
-						System.out.println(getEvent(event));
-						continue;
+						if (!event.isEndElement()) {
+							System.out.println(getEvent(event));
+							if (!genres.contains(getEvent(event))) {
+								gen = new Genre();
+								gen.setGenre(getEvent(event));
+								em.persist(gen);
+								System.out.println("Persisted!!!");
+								genres.add(getEvent(event));
+							} else {
+								System.out.println("Already in the list!");
+							}							
+						}
 					}
-				}
-				
-				// If we reach the end of an item element we add it to the list
-				if (event.isEndElement()) {
-					EndElement endElement = event.asEndElement();
-					if (endElement.getName().getLocalPart() == (GENRE) && level == 2) {
-						System.out.println(level);
-						em.persist(gen);
-						genres.add(gen);
-						System.out.println("Persisted!!!");
-					}
-					level--;
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Exception occuredRAr" + e.toString());
+			System.out.println("Exception occuredRG" + e.toString());
 			logger.error("Exception occured", e);
 			status = false;
 		} finally {
@@ -105,8 +97,6 @@ public class XMLParser {
 				status = false;
 			}
 		}
-		
-		return genres;
 	}
 	
 	/**

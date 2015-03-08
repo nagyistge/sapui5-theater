@@ -38,7 +38,7 @@ public class DataLoader {
 			queryG = em.createQuery("SELECT g FROM Genre g", 
 					Genre.class);
 			resG = queryG.getResultList();
-			System.out.println("Number of albums: " + resG.size());
+			System.out.println("Number of genres: " + resG.size());
 			
 		} catch (Exception e) {
 			System.out.println("Exception occuredLAl" + e);
@@ -99,8 +99,8 @@ public class DataLoader {
 	public void loadData() {
 		System.out.println("--> DataLoader");
 		loadGenres();
-		loadArtists();
-		loadAlbums();
+		//loadArtists();
+		//loadAlbums();
 	}
 
 }
