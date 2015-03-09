@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.sapui5theater.model.Genre;
+import com.sapui5theater.model.Style;
 import com.sapui5theater.model.Artist;
 import com.sapui5theater.model.Album;
 
@@ -38,10 +39,32 @@ public class DataLoader {
 			queryG = em.createQuery("SELECT g FROM Genre g", 
 					Genre.class);
 			resG = queryG.getResultList();
-			System.out.println("Number of genres: " + resG.size());
-			
+			System.out.println("Number of genres: " + resG.size());	
 		} catch (Exception e) {
-			System.out.println("Exception occuredLAl" + e);
+			System.out.println("Exception occuredLG" + e);
+			logger.error("Exception occured", e);
+		} finally {
+			em.close();
+		}
+	}
+	
+	public void loadStyles() {
+		System.out.println("--> Loading styles");
+		EntityManager em = emf.createEntityManager();
+		TypedQuery<Style> queryS;
+		List<Style> resS = null; 
+		//TODO: check if there is already data in the table
+		try {
+			em.getTransaction().begin();
+			new XMLParser().readStyles(em,
+					"com/sapui5theater/model/data/musicdb-test.xml");
+			em.getTransaction().commit();
+			queryS = em.createQuery("SELECT s FROM Style s", 
+					Style.class);
+			resS = queryS.getResultList();
+			System.out.println("Number of styles: " + resS.size());
+		} catch (Exception e) {
+			System.out.println("Exception occuredLS" + e);
 			logger.error("Exception occured", e);
 		} finally {
 			em.close();
@@ -99,6 +122,7 @@ public class DataLoader {
 	public void loadData() {
 		System.out.println("--> DataLoader");
 		loadGenres();
+		loadStyles();
 		loadArtists();
 		//loadAlbums();
 	}

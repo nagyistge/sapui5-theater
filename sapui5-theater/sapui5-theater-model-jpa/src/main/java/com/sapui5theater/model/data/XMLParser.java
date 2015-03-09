@@ -20,11 +20,13 @@ import org.slf4j.LoggerFactory;
 import com.sapui5theater.model.Genre;
 import com.sapui5theater.model.Artist;
 import com.sapui5theater.model.Album;
+import com.sapui5theater.model.Style;
 
 //TODO: remove list arrays ... they are not used
 
 public class XMLParser {
 	static final String GENRE = "genre";
+	static final String STYLE = "style";
 	static final String ARTIST = "artist";
 	static final String NAME = "name";
 	static final String MUSICBRAINZARTISTID = "musicBrainzArtistID";
@@ -81,6 +83,63 @@ public class XMLParser {
 			}
 		} catch (Exception e) {
 			System.out.println("Exception occuredRG" + e.toString());
+			logger.error("Exception occured", e);
+			status = false;
+		} finally {
+			try {
+				in.close();
+				eventReader.close();
+			} catch (IOException e) {
+				System.out.println("IO Exception occured" + e.toString());
+				logger.error("IO Exception occured", e);
+				status = false;
+			} catch (XMLStreamException e) {
+				System.out.println("XMLStream exception occured" + e.toString());
+				logger.error("XMLStream exception occured", e);
+				status = false;
+			}
+		}
+	}
+	
+	/**
+	 * Parse Styles and fill List
+	 * 
+	 * @param sXml
+	 * @return Parsed List of Styles
+	 */
+	//TODO: change param name XML file to a single file name
+	public void readStyles(EntityManager em, String sXml) {
+		System.out.println("--> Reading styles ...");
+		ArrayList<String> styles = new ArrayList<String>();
+		try {
+			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+			in = getResourceAsInputStream(sXml);
+			eventReader = inputFactory.createXMLEventReader(in);
+			Style sty = null;
+			//TODO: check is the level cannot be given by the lib
+			while (eventReader.hasNext()) {
+				XMLEvent event = eventReader.nextEvent();
+				if (event.isStartElement()) {
+					StartElement startElement = event.asStartElement();
+					if (startElement.getName().getLocalPart() == (STYLE)) {
+						event = eventReader.nextEvent();
+						if (!event.isEndElement()) {
+							System.out.println(getEvent(event));
+							if (!styles.contains(getEvent(event))) {
+								sty = new Style();
+								sty.setStyle(getEvent(event));
+								em.persist(sty);
+								System.out.println("Persisted!!!");
+								styles.add(getEvent(event));
+							} else {
+								System.out.println("Already in the list!");
+							}							
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Exception occuredRS" + e.toString());
 			logger.error("Exception occured", e);
 			status = false;
 		} finally {
