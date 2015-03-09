@@ -18,15 +18,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.sapui5theater.model.Genre;
+import com.sapui5theater.model.Style;
+import com.sapui5theater.model.Mood;
 import com.sapui5theater.model.Artist;
 import com.sapui5theater.model.Album;
-import com.sapui5theater.model.Style;
 
 //TODO: remove list arrays ... they are not used
 
 public class XMLParser {
 	static final String GENRE = "genre";
 	static final String STYLE = "style";
+	static final String MOOD = "mood";
 	static final String ARTIST = "artist";
 	static final String NAME = "name";
 	static final String MUSICBRAINZARTISTID = "musicBrainzArtistID";
@@ -140,6 +142,64 @@ public class XMLParser {
 			}
 		} catch (Exception e) {
 			System.out.println("Exception occuredRS" + e.toString());
+			logger.error("Exception occured", e);
+			status = false;
+		} finally {
+			try {
+				in.close();
+				eventReader.close();
+			} catch (IOException e) {
+				System.out.println("IO Exception occured" + e.toString());
+				logger.error("IO Exception occured", e);
+				status = false;
+			} catch (XMLStreamException e) {
+				System.out.println("XMLStream exception occured" + e.toString());
+				logger.error("XMLStream exception occured", e);
+				status = false;
+			}
+		}
+	}
+	
+	
+	/**
+	 * Parse Moods and fill List
+	 * 
+	 * @param mXml
+	 * @return Parsed List of Moods
+	 */
+	//TODO: change param name XML file to a single file name
+	public void readMoods(EntityManager em, String mXml) {
+		System.out.println("--> Reading moods ...");
+		ArrayList<String> moods = new ArrayList<String>();
+		try {
+			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+			in = getResourceAsInputStream(mXml);
+			eventReader = inputFactory.createXMLEventReader(in);
+			Mood moo = null;
+			//TODO: check is the level cannot be given by the lib
+			while (eventReader.hasNext()) {
+				XMLEvent event = eventReader.nextEvent();
+				if (event.isStartElement()) {
+					StartElement startElement = event.asStartElement();
+					if (startElement.getName().getLocalPart() == (MOOD)) {
+						event = eventReader.nextEvent();
+						if (!event.isEndElement()) {
+							System.out.println(getEvent(event));
+							if (!moods.contains(getEvent(event))) {
+								moo = new Mood();
+								moo.setMood(getEvent(event));
+								em.persist(moo);
+								System.out.println("Persisted!!!");
+								moods.add(getEvent(event));
+							} else {
+								System.out.println("Already in the list!");
+							}							
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Exception occuredRM" + e.toString());
 			logger.error("Exception occured", e);
 			status = false;
 		} finally {
