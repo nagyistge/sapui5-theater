@@ -272,6 +272,20 @@ public class XMLParser {
 						}
 						continue;
 					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(STYLE) && artFlg) {
+						event = eventReader.nextEvent();
+						if (!event.isEndElement()) {
+							System.out.println(getEvent(event));
+							Style sty = em.createQuery("SELECT s FROM Style s WHERE s.style = :style", Style.class)
+									.setParameter("style", getEvent(event)).getSingleResult();
+							System.out.println("ID of style: " + sty.getStyleId());
+							art.addStyle(sty);
+						} else {
+							level--;
+						}
+						
+					}
 				}
 				
 				// If we reach the end of an item element we add it to the list

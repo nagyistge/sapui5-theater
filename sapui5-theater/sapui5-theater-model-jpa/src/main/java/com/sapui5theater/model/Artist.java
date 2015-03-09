@@ -15,6 +15,7 @@ public class Artist {
 
 	public Artist() {
 		this.albums = new ArrayList<Album>();
+		this.styles = new ArrayList<Style>();
 	}
 
 	//TODO: change the key numbering
@@ -29,6 +30,12 @@ public class Artist {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "GENRE", referencedColumnName = "GENRE_ID")
 	private Genre genre;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+		      name="ARTIST_STYLE",
+		      joinColumns={@JoinColumn(name="ARTIST_ID", referencedColumnName="ARTIST_ID")},
+		      inverseJoinColumns={@JoinColumn(name="STYLE_ID", referencedColumnName="STYLE_ID")})
+	private List<Style> styles;
 	
 	public long getArtistId() {
 		return artistId;
@@ -68,6 +75,18 @@ public class Artist {
 
 	public void setGenre(Genre param) {
 		this.genre = param;
+	}
+	
+	public List<Style> getStyles() {
+		return styles;
+	}
+
+	public void setStyles(List<Style> param) {
+		this.styles = param;
+	}
+	
+	public void addStyle(Style param) {
+		this.styles.add(param);
 	}
 
 }
