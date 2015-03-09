@@ -115,14 +115,15 @@ public class XMLParser {
 			Artist art = null;
 			//TODO: check is the level cannot be given by the lib
 			int level = 0;
+			Boolean artFlg = false;
 			while (eventReader.hasNext()) {
 				XMLEvent event = eventReader.nextEvent();
 				if (event.isStartElement()) {
 					level++;
 					StartElement startElement = event.asStartElement();
 					if (startElement.getName().getLocalPart() == (ARTIST) && level == 2) {
+						artFlg = true;
 						art = new Artist();
-						System.out.println(level);
 					}
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(NAME)) {
@@ -132,10 +133,24 @@ public class XMLParser {
 						continue;
 					}
 					if (event.asStartElement().getName().getLocalPart()
-							.equals(MUSICBRAINZARTISTID) && level == 3) {
+							.equals(MUSICBRAINZARTISTID) && artFlg) {
 						event = eventReader.nextEvent();
 						art.setMusicBrainzArtistID(getEvent(event));
 						System.out.println(getEvent(event));
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(GENRE) && artFlg) {
+						event = eventReader.nextEvent();
+						if (!event.isEndElement()) {
+							System.out.println(getEvent(event));
+							Genre gen = em.createQuery("SELECT g FROM Genre g WHERE g.genre = :genre", Genre.class)
+									.setParameter("genre", getEvent(event)).getSingleResult();
+							System.out.println("ID of genre: " + gen.getGenreId());
+							art.setGenre(gen);
+						} else {
+							level--;
+						}
 						continue;
 					}
 				}
@@ -144,10 +159,10 @@ public class XMLParser {
 				if (event.isEndElement()) {
 					EndElement endElement = event.asEndElement();
 					if (endElement.getName().getLocalPart() == (ARTIST) && level == 2) {
-						System.out.println(level);
 						em.persist(art);
 						artists.add(art);
 						System.out.println("Persisted!!!");
+						artFlg = false;
 					}
 					level--;
 				}

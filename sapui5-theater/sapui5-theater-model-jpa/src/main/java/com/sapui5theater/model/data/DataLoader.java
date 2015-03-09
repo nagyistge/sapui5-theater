@@ -99,7 +99,7 @@ public class DataLoader {
 	public void loadData() {
 		System.out.println("--> DataLoader");
 		loadGenres();
-		//loadArtists();
+		loadArtists();
 		//loadAlbums();
 	}
 
