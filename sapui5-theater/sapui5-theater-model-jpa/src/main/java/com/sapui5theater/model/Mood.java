@@ -1,28 +1,25 @@
 package com.sapui5theater.model;
 
-import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name = "AllMoods", query = "select a from Mood a")
-public class Mood implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@NamedQuery(name = "AllMoods", query = "select m from Mood m")
+public class Mood {
 
 	public Mood() {
 	}
 
 	@Id
 	@GeneratedValue
-	private long id;
+	private long moodId;
 	private String mood;
 
-	public long getId() {
-		return id;
+	public long getMoodId() {
+		return moodId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setMoodId(long moodId) {
+		this.moodId = moodId;
 	}
 
 	public String getMood() {
