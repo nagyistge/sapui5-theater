@@ -11,11 +11,10 @@ import javax.persistence.*;
 //public class Artist implements Serializable {
 public class Artist {
 
-	private static final long serialVersionUID = 1L;
-
 	public Artist() {
 		this.albums = new ArrayList<Album>();
 		this.styles = new ArrayList<Style>();
+		this.moods = new ArrayList<Mood>();
 	}
 
 	//TODO: change the key numbering
@@ -36,6 +35,12 @@ public class Artist {
 		      joinColumns={@JoinColumn(name="ARTIST_ID", referencedColumnName="ARTIST_ID")},
 		      inverseJoinColumns={@JoinColumn(name="STYLE_ID", referencedColumnName="STYLE_ID")})
 	private List<Style> styles;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+		      name="ARTIST_MOOD",
+		      joinColumns={@JoinColumn(name="ARTIST_ID", referencedColumnName="ARTIST_ID")},
+		      inverseJoinColumns={@JoinColumn(name="MOOD_ID", referencedColumnName="MOOD_ID")})
+	private List<Mood> moods;
 	
 	public long getArtistId() {
 		return artistId;
@@ -87,6 +92,19 @@ public class Artist {
 	
 	public void addStyle(Style param) {
 		this.styles.add(param);
+	}
+	
+	
+	public List<Mood> getMoods() {
+		return moods;
+	}
+
+	public void setMoods(List<Mood> param) {
+		this.moods = param;
+	}
+	
+	public void addMood(Mood param) {
+		this.moods.add(param);
 	}
 
 }

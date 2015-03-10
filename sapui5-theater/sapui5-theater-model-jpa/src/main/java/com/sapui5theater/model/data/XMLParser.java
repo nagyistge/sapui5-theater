@@ -343,7 +343,21 @@ public class XMLParser {
 						} else {
 							level--;
 						}
-						
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(MOOD) && artFlg) {
+						event = eventReader.nextEvent();
+						if (!event.isEndElement()) {
+							System.out.println(getEvent(event));
+							Mood moo = em.createQuery("SELECT m FROM Mood m WHERE m.mood = :mood", Mood.class)
+									.setParameter("mood", getEvent(event)).getSingleResult();
+							System.out.println("ID of mood: " + moo.getMoodId());
+							art.addMood(moo);
+						} else {
+							level--;
+						}
+						continue;
 					}
 				}
 				
