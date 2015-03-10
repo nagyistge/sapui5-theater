@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.sapui5theater.model.Genre;
 import com.sapui5theater.model.Style;
 import com.sapui5theater.model.Mood;
+import com.sapui5theater.model.Theme;
 import com.sapui5theater.model.Artist;
 import com.sapui5theater.model.Album;
 
@@ -95,6 +96,29 @@ public class DataLoader {
 		}
 	}
 	
+	public void loadThemes() {
+		System.out.println("--> Loading themes");
+		EntityManager em = emf.createEntityManager();
+		TypedQuery<Theme> queryT;
+		List<Theme> resT = null; 
+		//TODO: check if there is already data in the table
+		try {
+			em.getTransaction().begin();
+			new XMLParser().readThemes(em,
+					"com/sapui5theater/model/data/musicdb-test.xml");
+			em.getTransaction().commit();
+			queryT = em.createQuery("SELECT t FROM Theme t", 
+					Theme.class);
+			resT = queryT.getResultList();
+			System.out.println("Number of themes: " + resT.size());
+		} catch (Exception e) {
+			System.out.println("Exception occuredLT" + e);
+			logger.error("Exception occured", e);
+		} finally {
+			em.close();
+		}
+	}
+	
 	public void loadArtists() {
 		System.out.println("--> Loading artists");
 		EntityManager em = emf.createEntityManager();
@@ -148,6 +172,7 @@ public class DataLoader {
 		loadGenres();
 		loadStyles();
 		loadMoods();
+		loadThemes();
 		loadArtists();
 		//loadAlbums();
 	}
