@@ -1,28 +1,26 @@
 package com.sapui5theater.model;
 
-import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name = "AllThemes", query = "select a from Theme a")
-public class Theme implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@NamedQuery(name = "AllThemes", query = "select t from Theme t")
+public class Theme {
 
 	public Theme() {
 	}
 
 	@Id
 	@GeneratedValue
-	private long id;
+	@Column(name = "THEME_ID")
+	private long themeId;
 	private String theme;
 
-	public long getId() {
-		return id;
+	public long getThemeId() {
+		return themeId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setThemeId(long themeId) {
+		this.themeId = themeId;
 	}
 
 	public String getTheme() {
