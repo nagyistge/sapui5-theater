@@ -1,6 +1,5 @@
 package com.sapui5theater.model;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
