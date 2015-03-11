@@ -11,6 +11,7 @@ public class Style {
 
 	public Style() {
 		this.artists = new ArrayList<Artist>();
+		this.albums = new ArrayList<Album>();		
 	}
 
 	@Id
@@ -20,6 +21,8 @@ public class Style {
 	private String style;
 	@ManyToMany(mappedBy="styles", fetch = FetchType.EAGER)
 	private List<Artist> artists;
+	@ManyToMany(mappedBy="styles", fetch = FetchType.EAGER)
+	private List<Album> albums;
 
 	public long getStyleId() {
 		return styleId;
@@ -47,6 +50,18 @@ public class Style {
 	
 	public void addArtist(Artist param) {
 		this.artists.add(param);
+	}
+	
+	public List<Album> getAlbums() {
+		return albums;
+	}
+
+	public void setAlbums(List<Album> param) {
+		this.albums = param;
+	}
+	
+	public void addAlbum(Album param) {
+		this.albums.add(param);
 	}
 	
 }

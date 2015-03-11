@@ -11,6 +11,7 @@ public class Mood {
 
 	public Mood() {
 		this.artists = new ArrayList<Artist>();
+		this.albums = new ArrayList<Album>();
 	}
 
 	@Id
@@ -20,6 +21,8 @@ public class Mood {
 	private String mood;
 	@ManyToMany(mappedBy="moods", fetch = FetchType.EAGER)
 	private List<Artist> artists;
+	@ManyToMany(mappedBy="moods", fetch = FetchType.EAGER)
+	private List<Album> albums;
 
 	public long getMoodId() {
 		return moodId;
@@ -47,6 +50,18 @@ public class Mood {
 	
 	public void addArtist(Artist param) {
 		this.artists.add(param);
+	}
+	
+	public List<Album> getAlbums() {
+		return albums;
+	}
+
+	public void setAlbums(List<Album> param) {
+		this.albums = param;
+	}
+	
+	public void addAlbum(Album param) {
+		this.albums.add(param);
 	}
 
 }
