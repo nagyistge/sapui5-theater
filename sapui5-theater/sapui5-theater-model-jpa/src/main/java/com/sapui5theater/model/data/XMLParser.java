@@ -34,6 +34,10 @@ public class XMLParser {
 	static final String ARTIST = "artist";
 	static final String NAME = "name";
 	static final String MUSICBRAINZARTISTID = "musicBrainzArtistID";
+	static final String YEARSACTIVE = "yearsactive";
+	static final String BIOGRAPHY = "biography";	
+	static final String BORN = "born";
+	static final String DIED = "died";
 	static final String ALBUM = "album";
 	static final String TITLE = "title";
 	static final String MUSICBRAINZALBUMID = "musicBrainzAlbumID";	
@@ -311,13 +315,6 @@ public class XMLParser {
 						continue;
 					}
 					if (event.asStartElement().getName().getLocalPart()
-							.equals(MUSICBRAINZARTISTID) && artFlg) {
-						event = eventReader.nextEvent();
-						art.setMusicBrainzArtistID(getEvent(event));
-						System.out.println(getEvent(event));
-						continue;
-					}
-					if (event.asStartElement().getName().getLocalPart()
 							.equals(GENRE) && artFlg) {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
@@ -338,7 +335,7 @@ public class XMLParser {
 							System.out.println(getEvent(event));
 							Style sty = em.createQuery("SELECT s FROM Style s WHERE s.style = :style", Style.class)
 									.setParameter("style", getEvent(event)).getSingleResult();
-							System.out.println("ID of style: " + sty.getStyleId());
+							//System.out.println("ID of style: " + sty.getStyleId());
 							art.addStyle(sty);
 						} else {
 							level--;
@@ -352,8 +349,51 @@ public class XMLParser {
 							System.out.println(getEvent(event));
 							Mood moo = em.createQuery("SELECT m FROM Mood m WHERE m.mood = :mood", Mood.class)
 									.setParameter("mood", getEvent(event)).getSingleResult();
-							System.out.println("ID of mood: " + moo.getMoodId());
+							//System.out.println("ID of mood: " + moo.getMoodId());
 							art.addMood(moo);
+						} else {
+							level--;
+						}
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(MUSICBRAINZARTISTID) && artFlg) {
+						event = eventReader.nextEvent();
+						art.setMusicBrainzArtistID(getEvent(event));
+						//System.out.println(getEvent(event));
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(YEARSACTIVE) && artFlg) {
+						event = eventReader.nextEvent();
+						art.setYearsActive(getEvent(event));
+						System.out.println(getEvent(event));
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(BIOGRAPHY) && artFlg) {
+						event = eventReader.nextEvent();
+						if (!event.isEndElement()) {
+							art.setBiography(getEvent(event).substring(0, Math.min(getEvent(event).length(), 255)));
+							System.out.println(getEvent(event));
+						} else {
+							level--;
+						}
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(BORN) && artFlg) {
+						event = eventReader.nextEvent();
+						art.setBornInfo(getEvent(event));
+						System.out.println(getEvent(event));
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(DIED) && artFlg) {
+						event = eventReader.nextEvent();
+						if (!event.isEndElement()) {
+							art.setDied(Boolean.valueOf(getEvent(event)));
+							System.out.println(getEvent(event));
 						} else {
 							level--;
 						}
