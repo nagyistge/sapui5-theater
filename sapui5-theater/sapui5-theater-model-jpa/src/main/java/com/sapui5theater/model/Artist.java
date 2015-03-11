@@ -40,6 +40,7 @@ public class Artist {
 	private List<Mood> moods;
 	private String musicBrainzArtistID;
 	private String yearsActive;
+	private String biography;
 	private String bornInfo;
 	private Boolean died;
 	private String bandFormed;	
@@ -110,6 +111,14 @@ public class Artist {
 
 	public void setYearsActive(String param) {
 		this.yearsActive = param;
+	}
+	
+	public String getBiography() {
+		return biography;
+	}
+
+	public void setBiography(String param) {
+		this.biography = param;
 	}
 	
 	public String getBornInfo() {
