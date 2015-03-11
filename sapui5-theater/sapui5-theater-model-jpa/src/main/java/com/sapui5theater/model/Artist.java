@@ -12,9 +12,9 @@ import javax.persistence.*;
 public class Artist {
 
 	public Artist() {
-		this.albums = new ArrayList<Album>();
 		this.styles = new ArrayList<Style>();
 		this.moods = new ArrayList<Mood>();
+		this.albums = new ArrayList<Album>();
 	}
 
 	//TODO: change the key numbering
@@ -23,9 +23,6 @@ public class Artist {
 	@Column(name = "ARTIST_ID")
 	private long artistId;
 	private String name;
-	private String musicBrainzArtistID;
-	@OneToMany(mappedBy = "artist", fetch = FetchType.EAGER)
-	private List<Album> albums;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "GENRE", referencedColumnName = "GENRE_ID")
 	private Genre genre;
@@ -41,6 +38,15 @@ public class Artist {
 		      joinColumns={@JoinColumn(name="ARTIST_ID", referencedColumnName="ARTIST_ID")},
 		      inverseJoinColumns={@JoinColumn(name="MOOD_ID", referencedColumnName="MOOD_ID")})
 	private List<Mood> moods;
+	private String musicBrainzArtistID;
+	private String yearsActive;
+	private String bornInfo;
+	private Boolean died;
+	private String bandFormed;	
+	private Boolean bandDisbanded;
+	private String thumbURL;
+	@OneToMany(mappedBy = "artist", fetch = FetchType.EAGER)
+	private List<Album> albums;
 	
 	public long getArtistId() {
 		return artistId;
@@ -56,22 +62,6 @@ public class Artist {
 
 	public void setName(String param) {
 		this.name = param;
-	}
-
-	public String getMusicBrainzArtistID() {
-		return musicBrainzArtistID;
-	}
-
-	public void setMusicBrainzArtistID(String param) {
-		this.musicBrainzArtistID = param;
-	}
-	
-	public List<Album> getAlbums() {
-		return albums;
-	}
-
-	public void setAlbums(List<Album> param) {
-		this.albums = param;
 	}
 	
 	public Genre getGenre() {
@@ -94,7 +84,6 @@ public class Artist {
 		this.styles.add(param);
 	}
 	
-	
 	public List<Mood> getMoods() {
 		return moods;
 	}
@@ -105,6 +94,74 @@ public class Artist {
 	
 	public void addMood(Mood param) {
 		this.moods.add(param);
+	}
+	
+	public String getMusicBrainzArtistID() {
+		return musicBrainzArtistID;
+	}
+
+	public void setMusicBrainzArtistID(String param) {
+		this.musicBrainzArtistID = param;
+	}
+	
+	public String getYearsActive() {
+		return yearsActive;
+	}
+
+	public void setYearsActive(String param) {
+		this.yearsActive = param;
+	}
+	
+	public String getBornInfo() {
+		return bornInfo;
+	}
+
+	public void setBornInfo(String param) {
+		this.bornInfo = param;
+	}
+	
+	public Boolean getDied() {
+		return died;
+	}
+
+	public void setDied(Boolean param) {
+		this.died = param;
+	}
+	
+	public String getBandFormed() {
+		return bandFormed;
+	}
+
+	public void setBandFormed(String param) {
+		this.bandFormed = param;
+	}
+	
+	public Boolean getBandDisbanded() {
+		return bandDisbanded;
+	}
+
+	public void setBandDisbanded(Boolean param) {
+		this.bandDisbanded = param;
+	}
+	
+	public List<Album> getAlbums() {
+		return albums;
+	}
+
+	public void setAlbums(List<Album> param) {
+		this.albums = param;
+	}
+	
+	public void addAlbum(Album param) {
+		this.albums.add(param);
+	}
+	
+	public String getThumbURL() {
+		return thumbURL;
+	}
+
+	public void setThumbURL(String param) {
+		this.thumbURL = param;
 	}
 
 }
