@@ -24,6 +24,7 @@ import com.sapui5theater.model.Artist;
 import com.sapui5theater.model.Album;
 
 //TODO: remove list arrays ... they are not used
+//TODO: Manage Boolean, mandatory field
 
 public class XMLParser {
 	static final String GENRE = "genre";
@@ -82,10 +83,10 @@ public class XMLParser {
 								gen = new Genre();
 								gen.setGenre(getEvent(event));
 								em.persist(gen);
-								System.out.println("Persisted!!!");
+								//System.out.println("Persisted!!!");
 								genres.add(getEvent(event));
 							} else {
-								System.out.println("Already in the list!");
+								//System.out.println("Already in the list!");
 							}							
 						}
 					}
@@ -139,10 +140,10 @@ public class XMLParser {
 								sty = new Style();
 								sty.setStyle(getEvent(event));
 								em.persist(sty);
-								System.out.println("Persisted!!!");
+								//System.out.println("Persisted!!!");
 								styles.add(getEvent(event));
 							} else {
-								System.out.println("Already in the list!");
+								//System.out.println("Already in the list!");
 							}							
 						}
 					}
@@ -192,15 +193,15 @@ public class XMLParser {
 					if (startElement.getName().getLocalPart() == (MOOD)) {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
-							System.out.println(getEvent(event));
+							//System.out.println(getEvent(event));
 							if (!moods.contains(getEvent(event))) {
 								moo = new Mood();
 								moo.setMood(getEvent(event));
 								em.persist(moo);
-								System.out.println("Persisted!!!");
+								//System.out.println("Persisted!!!");
 								moods.add(getEvent(event));
 							} else {
-								System.out.println("Already in the list!");
+								//System.out.println("Already in the list!");
 							}							
 						}
 					}
@@ -249,15 +250,15 @@ public class XMLParser {
 					if (startElement.getName().getLocalPart() == (THEME)) {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
-							System.out.println(getEvent(event));
+							//System.out.println(getEvent(event));
 							if (!themes.contains(getEvent(event))) {
 								the = new Theme();
 								the.setTheme(getEvent(event));
 								em.persist(the);
-								System.out.println("Persisted!!!");
+								//System.out.println("Persisted!!!");
 								themes.add(getEvent(event));
 							} else {
-								System.out.println("Already in the list!");
+								//System.out.println("Already in the list!");
 							}							
 						}
 					}
@@ -323,7 +324,7 @@ public class XMLParser {
 							System.out.println(getEvent(event));
 							Genre gen = em.createQuery("SELECT g FROM Genre g WHERE g.genre = :genre", Genre.class)
 									.setParameter("genre", getEvent(event)).getSingleResult();
-							System.out.println("ID of genre: " + gen.getGenreId());
+							//System.out.println("ID of genre: " + gen.getGenreId());
 							art.setGenre(gen);
 						} else {
 							level--;
@@ -334,7 +335,7 @@ public class XMLParser {
 							.equals(STYLE) && artFlg) {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
-							System.out.println(getEvent(event));
+							//System.out.println(getEvent(event));
 							Style sty = em.createQuery("SELECT s FROM Style s WHERE s.style = :style", Style.class)
 									.setParameter("style", getEvent(event)).getSingleResult();
 							//System.out.println("ID of style: " + sty.getStyleId());
@@ -348,7 +349,7 @@ public class XMLParser {
 							.equals(MOOD) && artFlg) {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
-							System.out.println(getEvent(event));
+							//System.out.println(getEvent(event));
 							Mood moo = em.createQuery("SELECT m FROM Mood m WHERE m.mood = :mood", Mood.class)
 									.setParameter("mood", getEvent(event)).getSingleResult();
 							//System.out.println("ID of mood: " + moo.getMoodId());
@@ -386,8 +387,12 @@ public class XMLParser {
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(BORN) && artFlg) {
 						event = eventReader.nextEvent();
-						art.setBornInfo(getEvent(event));
-						System.out.println(getEvent(event));
+						if (!event.isEndElement()) {
+							art.setBornInfo(getEvent(event));
+							System.out.println(getEvent(event));
+						} else {
+							level--;
+						}
 						continue;
 					}
 					if (event.asStartElement().getName().getLocalPart()
@@ -618,9 +623,13 @@ public class XMLParser {
 							.equals(THUMB)) {
 						event = eventReader.nextEvent();
 						System.out.println(getEvent(event));
-						if (!thuFlg) {
-							thuFlg = true;
-							alb.setThumbURL(getEvent(event));
+						if (!event.isEndElement()) {
+							if (!thuFlg) {
+								thuFlg = true;
+								alb.setThumbURL(getEvent(event));
+							}
+						} else {
+							level--;
 						}
 						continue;
 					}
