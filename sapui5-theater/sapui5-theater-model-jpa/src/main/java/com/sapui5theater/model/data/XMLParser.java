@@ -38,6 +38,9 @@ public class XMLParser {
 	static final String BIOGRAPHY = "biography";	
 	static final String BORN = "born";
 	static final String DIED = "died";
+	static final String FORMED = "formed";
+	static final String DISBANDED = "disbanded";
+	static final String THUMB = "thumb";
 	static final String ALBUM = "album";
 	static final String TITLE = "title";
 	static final String MUSICBRAINZALBUMID = "musicBrainzAlbumID";	
@@ -393,6 +396,39 @@ public class XMLParser {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
 							art.setDied(Boolean.valueOf(getEvent(event)));
+							System.out.println(getEvent(event));
+						} else {
+							level--;
+						}
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(FORMED) && artFlg) {
+						event = eventReader.nextEvent();
+						if (!event.isEndElement()) {
+							art.setBandFormed(getEvent(event));
+							System.out.println(getEvent(event));							
+						} else {
+							level--;
+						}
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(DISBANDED) && artFlg) {
+						event = eventReader.nextEvent();
+						if (!event.isEndElement()) {
+							art.setBandDisbanded(Boolean.valueOf(getEvent(event)));
+							System.out.println(getEvent(event));
+						} else {
+							level--;
+						}
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(THUMB) && level == 4) {
+						event = eventReader.nextEvent();
+						if (!event.isEndElement()) {
+							art.setThumbURL(getEvent(event));
 							System.out.println(getEvent(event));
 						} else {
 							level--;
