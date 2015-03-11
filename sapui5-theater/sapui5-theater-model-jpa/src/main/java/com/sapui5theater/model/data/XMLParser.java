@@ -1,6 +1,5 @@
 package com.sapui5theater.model.data;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -488,12 +487,15 @@ public class XMLParser {
 			Album alb = null;
 			//TODO: check is the level cannot be given by the lib
 			int level = 0;
+			Boolean albFlg = false;
+			Boolean thuFlg = false;
 			while (eventReader.hasNext()) {
 				XMLEvent event = eventReader.nextEvent();
 				if (event.isStartElement()) {
 					level++;				
 					StartElement startElement = event.asStartElement();
 					if (startElement.getName().getLocalPart() == (ALBUM) && level == 2) {
+						albFlg = true;
 						alb = new Album();
 						System.out.println(level);
 					}
@@ -501,13 +503,6 @@ public class XMLParser {
 							.equals(TITLE) && level == 3) {
 						event = eventReader.nextEvent();
 						alb.setTitle(getEvent(event));
-						System.out.println(getEvent(event));
-						continue;
-					}
-					if (event.asStartElement().getName().getLocalPart()
-							.equals(MUSICBRAINZALBUMID) && level == 3) {
-						event = eventReader.nextEvent();
-						alb.setMusicBrainzAlbumID(getEvent(event));
 						System.out.println(getEvent(event));
 						continue;
 					}
@@ -522,6 +517,69 @@ public class XMLParser {
 						continue;
 					}
 					if (event.asStartElement().getName().getLocalPart()
+							.equals(GENRE) && albFlg) {
+						event = eventReader.nextEvent();
+						if (!event.isEndElement()) {
+							//System.out.println(getEvent(event));
+							Genre gen = em.createQuery("SELECT g FROM Genre g WHERE g.genre = :genre", Genre.class)
+									.setParameter("genre", getEvent(event)).getSingleResult();
+							//System.out.println("ID of genre: " + gen.getGenreId());
+							alb.setGenre(gen);
+						} else {
+							level--;
+						}
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(STYLE) && albFlg) {
+						event = eventReader.nextEvent();
+						if (!event.isEndElement()) {
+							//System.out.println(getEvent(event));
+							Style sty = em.createQuery("SELECT s FROM Style s WHERE s.style = :style", Style.class)
+									.setParameter("style", getEvent(event)).getSingleResult();
+							//System.out.println("ID of style: " + sty.getStyleId());
+							alb.addStyle(sty);
+						} else {
+							level--;
+						}
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(MOOD) && albFlg) {
+						event = eventReader.nextEvent();
+						if (!event.isEndElement()) {
+							System.out.println(getEvent(event));
+							Mood moo = em.createQuery("SELECT m FROM Mood m WHERE m.mood = :mood", Mood.class)
+									.setParameter("mood", getEvent(event)).getSingleResult();
+							//System.out.println("ID of mood: " + moo.getMoodId());
+							alb.addMood(moo);
+						} else {
+							level--;
+						}
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(THEME) && albFlg) {
+						event = eventReader.nextEvent();
+						if (!event.isEndElement()) {
+							System.out.println(getEvent(event));
+							Theme the = em.createQuery("SELECT t FROM Theme t WHERE t.theme = :theme", Theme.class)
+									.setParameter("theme", getEvent(event)).getSingleResult();
+							System.out.println("ID of theme: " + the.getThemeId());
+							alb.addTheme(the);
+						} else {
+							level--;
+						}
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(MUSICBRAINZALBUMID) && albFlg) {
+						event = eventReader.nextEvent();
+						alb.setMusicBrainzAlbumID(getEvent(event));
+						System.out.println(getEvent(event));
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
 							.equals(COMPILATION)) {
 						event = eventReader.nextEvent();
 						alb.setCompilation(Boolean.valueOf(getEvent(event)));;
@@ -532,6 +590,12 @@ public class XMLParser {
 						event = eventReader.nextEvent();
 						alb.setReview(getEvent(event).substring(0, Math.min(getEvent(event).length(), 255)));
 						//TODO: manager longer review fields
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(YEAR)) {
+						event = eventReader.nextEvent();
+						alb.setYearRelease(Integer.parseInt(getEvent(event)));
 						continue;
 					}
 					if (event.asStartElement().getName().getLocalPart()
@@ -551,9 +615,13 @@ public class XMLParser {
 						continue;
 					}
 					if (event.asStartElement().getName().getLocalPart()
-							.equals(YEAR)) {
+							.equals(THUMB)) {
 						event = eventReader.nextEvent();
-						alb.setYearRelease(Integer.parseInt(getEvent(event)));
+						System.out.println(getEvent(event));
+						if (!thuFlg) {
+							thuFlg = true;
+							alb.setThumbURL(getEvent(event));
+						}
 						continue;
 					}
 				}
@@ -562,7 +630,9 @@ public class XMLParser {
 				if (event.isEndElement()) {
 					EndElement endElement = event.asEndElement();
 					if (endElement.getName().getLocalPart() == (ALBUM) && level == 2) {
-						System.out.println(level);
+						albFlg = false;
+						thuFlg = false;
+						//System.out.println(level);
 						em.persist(alb);
 						albums.add(alb);
 						System.out.println("Persisted!!!");

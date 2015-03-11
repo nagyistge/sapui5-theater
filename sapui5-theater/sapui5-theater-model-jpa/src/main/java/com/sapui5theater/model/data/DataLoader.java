@@ -174,7 +174,7 @@ public class DataLoader {
 		loadMoods();
 		loadThemes();
 		loadArtists();
-		//loadAlbums();
+		loadAlbums();
 	}
 
 }
