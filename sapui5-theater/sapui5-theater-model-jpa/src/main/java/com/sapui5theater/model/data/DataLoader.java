@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 
-//TODO: implement logging and where to read the logs?
+//TODO: implement logging and where to read the logs? // Complex, use jul-2-slf4j
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +16,7 @@ import com.sapui5theater.model.Mood;
 import com.sapui5theater.model.Theme;
 import com.sapui5theater.model.Artist;
 import com.sapui5theater.model.Album;
+import com.sapui5theater.model.Track;
 
 public class DataLoader {
 	
@@ -28,6 +29,7 @@ public class DataLoader {
 	}
 	
 	public void loadGenres() {
+		logger.error("Loading genres");
 		System.out.println("--> Loading genres");
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Genre> queryG;
@@ -107,7 +109,7 @@ public class DataLoader {
 			new XMLParser().readThemes(em,
 					"com/sapui5theater/model/data/musicdb-test.xml");
 			em.getTransaction().commit();
-			queryT = em.createQuery("SELECT t FROM Theme t", 
+			queryT = em.createQuery("SELECT th FROM Theme th", 
 					Theme.class);
 			resT = queryT.getResultList();
 			System.out.println("Number of themes: " + resT.size());
@@ -167,6 +169,30 @@ public class DataLoader {
 		}
 	}
 	
+	public void loadTracks() {
+		System.out.println("--> Loading tracks");
+		EntityManager em = emf.createEntityManager();
+		TypedQuery<Track> queryTr;
+		List<Track> resTr = null; 
+		//TODO: check if there is already data in the table
+		try {
+			em.getTransaction().begin();
+			new XMLParser().readTracks(em,
+					"com/sapui5theater/model/data/musicdb-test.xml");
+			em.getTransaction().commit();
+			queryTr = em.createQuery("SELECT tr FROM Track tr", 
+					Track.class);
+			resTr = queryTr.getResultList();
+			System.out.println("--> Number of tracks: " + resTr.size());
+			
+		} catch (Exception e) {
+			System.out.println("Exception occuredLTr" + e);
+			logger.error("Exception occured", e);
+		} finally {
+			em.close();
+		}
+	}
+	
 	public void loadData() {
 		System.out.println("--> DataLoader");
 		loadGenres();
@@ -175,6 +201,7 @@ public class DataLoader {
 		loadThemes();
 		loadArtists();
 		loadAlbums();
+		loadTracks();
 	}
 
 }

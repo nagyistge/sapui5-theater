@@ -22,6 +22,7 @@ import com.sapui5theater.model.Mood;
 import com.sapui5theater.model.Theme;
 import com.sapui5theater.model.Artist;
 import com.sapui5theater.model.Album;
+import com.sapui5theater.model.Track;
 
 //TODO: remove list arrays ... they are not used
 //TODO: Manage Boolean, mandatory field
@@ -49,6 +50,7 @@ public class XMLParser {
 	static final String LABEL = "label";
 	static final String RATING = "rating";
 	static final String YEAR = "year";
+	static final String TRACK = "track";
 	
 	static Logger logger = LoggerFactory.getLogger(XMLParser.class);
 	
@@ -63,6 +65,8 @@ public class XMLParser {
 	 * @return Parsed List of Genres
 	 */
 	public void readGenres(EntityManager em, String aXml) {
+		logger.info("Reading genres");
+		logger.error("Reading genres");
 		System.out.println("--> Reading genres ...");
 		ArrayList<String> genres = new ArrayList<String>();
 		try {
@@ -430,7 +434,7 @@ public class XMLParser {
 					}
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(THUMB) && level == 4) {
-						event = eventReader.nextEvent();
+						//event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
 							art.setThumbURL(getEvent(event));
 							System.out.println(getEvent(event));
@@ -473,6 +477,101 @@ public class XMLParser {
 		}
 		
 		return artists;
+	}
+	
+	/**
+	 * Parse Tracks and fill List
+	 * 
+	 * @param trXml
+	 * @return Parsed List of Tracks
+	 */
+	//TODO: rename trXml ... only 1 file
+	public List<Track> readTracks(EntityManager em, String trXml) {
+		System.out.println("Reading tracks ...");
+		ArrayList<Track> tracks = new ArrayList<Track>();
+		try {
+			XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+			in = getResourceAsInputStream(trXml);
+			eventReader = inputFactory.createXMLEventReader(in);
+			Track tra = null;
+			//TODO: check is the level cannot be given by the lib
+			int level = 0;
+			Boolean albFlg = false;
+			Album alb = null;
+			while (eventReader.hasNext()) {
+				XMLEvent event = eventReader.nextEvent();
+				if (event.isStartElement()) {
+					level++;
+					StartElement startElement = event.asStartElement();
+					if (startElement.getName().getLocalPart() == (ALBUM) && level == 2) {
+						albFlg = true;
+						//System.out.println("Album!!");
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(TITLE) && level == 3 && albFlg == true) {
+						event = eventReader.nextEvent();
+						//System.out.println("New track");
+						alb = em.createQuery("SELECT al FROM Album al WHERE al.title = :title", Album.class)
+								.setParameter("title", getEvent(event)).getSingleResult();
+						//System.out.println(alb.getAlbumId());
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(TRACK)) {
+						event = eventReader.nextEvent();
+						//System.out.println("New track");
+						tra = new Track();
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(TITLE) && level == 4 && albFlg == true) {
+						event = eventReader.nextEvent();
+						//System.out.println("Yop!");
+						//System.out.println(alb.getAlbumId());
+						tra.setAlbum(alb);
+						tra.setTitle(getEvent(event));
+						//System.out.println(getEvent(event));
+						continue;
+					}
+				}
+				
+				// If we reach the end of an item element we add it to the list
+				if (event.isEndElement()) {
+					EndElement endElement = event.asEndElement();					
+					if (endElement.getName().getLocalPart() == (TRACK)) {
+						//System.out.println("End of new track");
+						System.out.println("Track: " + tra.getTitle() +
+								" / Album: " + tra.getAlbum().getTitle() +
+								" (" + tra.getAlbum().getAlbumId() +")");
+						em.persist(tra);
+						tracks.add(tra);
+					}
+					if (endElement.getName().getLocalPart() == (ALBUM) && level == 2) {
+						albFlg = false;
+					}
+					level--;
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Exception occuredRTr" + e.toString());
+			logger.error("Exception occured", e);
+			status = false;
+		} finally {
+			try {
+				in.close();
+				eventReader.close();
+			} catch (IOException e) {
+				System.out.println("IO Exception occured" + e.toString());
+				logger.error("IO Exception occured", e);
+				status = false;
+			} catch (XMLStreamException e) {
+				System.out.println("XMLStream exception occured" + e.toString());
+				logger.error("XMLStream exception occured", e);
+				status = false;
+			}
+		}
+
+		return tracks;
 	}
 	
 	/**
@@ -568,7 +667,7 @@ public class XMLParser {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
 							System.out.println(getEvent(event));
-							Theme the = em.createQuery("SELECT t FROM Theme t WHERE t.theme = :theme", Theme.class)
+							Theme the = em.createQuery("SELECT th FROM Theme th WHERE th.theme = :theme", Theme.class)
 									.setParameter("theme", getEvent(event)).getSingleResult();
 							System.out.println("ID of theme: " + the.getThemeId());
 							alb.addTheme(the);
@@ -622,7 +721,7 @@ public class XMLParser {
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(THUMB)) {
 						event = eventReader.nextEvent();
-						System.out.println(getEvent(event));
+						//System.out.println(getEvent(event));
 						if (!event.isEndElement()) {
 							if (!thuFlg) {
 								thuFlg = true;
