@@ -51,6 +51,8 @@ public class XMLParser {
 	static final String RATING = "rating";
 	static final String YEAR = "year";
 	static final String TRACK = "track";
+	static final String POSITION = "position";
+	static final String DURATION = "duration";
 	
 	static Logger logger = LoggerFactory.getLogger(XMLParser.class);
 	
@@ -531,6 +533,23 @@ public class XMLParser {
 						tra.setAlbum(alb);
 						tra.setTitle(getEvent(event));
 						//System.out.println(getEvent(event));
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(POSITION)) {
+						event = eventReader.nextEvent();
+						tra.setPosition(Integer.parseInt(getEvent(event)));
+						continue;
+					}
+					if (event.asStartElement().getName().getLocalPart()
+							.equals(DURATION)) {
+						event = eventReader.nextEvent();
+						String duration = getEvent(event);
+						int sep = duration.lastIndexOf(':');
+						int min =  Integer.parseInt(duration.substring(0, sep));
+						int sec = Integer.parseInt(duration.substring(sep+1));
+						int dur = sec + 60*min;
+						tra.setDuration(dur);
 						continue;
 					}
 				}
