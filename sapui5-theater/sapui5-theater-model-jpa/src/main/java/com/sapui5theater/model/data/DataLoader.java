@@ -146,7 +146,6 @@ public class DataLoader {
 	}
 	
 	public void loadAlbums() {
-		System.out.println("--> Loading albums");
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Album> queryAl;
 		List<Album> resAl = null; 
@@ -170,7 +169,6 @@ public class DataLoader {
 	}
 	
 	public void loadTracks() {
-		System.out.println("--> Loading tracks");
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Track> queryTr;
 		List<Track> resTr = null; 
