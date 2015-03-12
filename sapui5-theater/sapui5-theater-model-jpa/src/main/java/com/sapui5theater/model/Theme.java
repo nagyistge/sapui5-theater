@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@NamedQuery(name = "AllThemes", query = "select t from Theme t")
+@NamedQuery(name = "AllThemes", query = "select th from Theme th")
 public class Theme {
 
 	public Theme() {

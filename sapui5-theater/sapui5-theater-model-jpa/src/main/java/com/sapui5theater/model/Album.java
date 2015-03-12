@@ -14,6 +14,7 @@ public class Album {
 		this.styles = new ArrayList<Style>();
 		this.moods = new ArrayList<Mood>();
 		this.themes = new ArrayList<Theme>();
+		this.tracks = new ArrayList<Track>();
 	}
 
 	@Id
@@ -52,6 +53,8 @@ public class Album {
 	private String label;
 	private int rating;
 	private String thumbURL;
+	@OneToMany(mappedBy = "album", fetch = FetchType.EAGER)
+	private List<Track> tracks;
 
 	public long getAlbumId() {
 		return albumId;
@@ -177,4 +180,16 @@ public class Album {
 		this.thumbURL = param;
 	}
 
+	public List<Track> getTracks() {
+		return tracks;
+	}
+
+	public void setTracks(List<Track> param) {
+		this.tracks = param;
+	}
+	
+	public void addTrack(Track param) {
+		this.tracks.add(param);
+	}
+	
 }

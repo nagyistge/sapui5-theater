@@ -17,6 +17,7 @@ public class Artist {
 	}
 
 	//TODO: change the key numbering
+	//TODO: name all fields and assign size
 	@Id
 	@GeneratedValue
 	@Column(name = "ARTIST_ID")
@@ -152,6 +153,14 @@ public class Artist {
 		this.bandDisbanded = param;
 	}
 	
+	public String getThumbURL() {
+		return thumbURL;
+	}
+
+	public void setThumbURL(String param) {
+		this.thumbURL = param;
+	}
+	
 	public List<Album> getAlbums() {
 		return albums;
 	}
@@ -162,14 +171,6 @@ public class Artist {
 	
 	public void addAlbum(Album param) {
 		this.albums.add(param);
-	}
-	
-	public String getThumbURL() {
-		return thumbURL;
-	}
-
-	public void setThumbURL(String param) {
-		this.thumbURL = param;
 	}
 
 }
