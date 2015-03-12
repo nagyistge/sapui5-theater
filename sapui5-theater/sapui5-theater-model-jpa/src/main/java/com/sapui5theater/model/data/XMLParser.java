@@ -67,8 +67,6 @@ public class XMLParser {
 	 * @return Parsed List of Genres
 	 */
 	public void readGenres(EntityManager em, String aXml) {
-		logger.info("Reading genres");
-		logger.error("Reading genres");
 		System.out.println("--> Reading genres ...");
 		ArrayList<String> genres = new ArrayList<String>();
 		try {
@@ -84,22 +82,19 @@ public class XMLParser {
 					if (startElement.getName().getLocalPart() == (GENRE)) {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
-							System.out.println(getEvent(event));
 							if (!genres.contains(getEvent(event))) {
 								gen = new Genre();
 								gen.setGenre(getEvent(event));
 								em.persist(gen);
-								//System.out.println("Persisted!!!");
+								System.out.println("Genre: " + gen.getGenre());
 								genres.add(getEvent(event));
-							} else {
-								//System.out.println("Already in the list!");
 							}							
 						}
 					}
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Exception occuredRG" + e.toString());
+			System.out.println("Exception occured" + e.toString());
 			logger.error("Exception occured", e);
 			status = false;
 		} finally {
@@ -141,22 +136,19 @@ public class XMLParser {
 					if (startElement.getName().getLocalPart() == (STYLE)) {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
-							System.out.println(getEvent(event));
 							if (!styles.contains(getEvent(event))) {
 								sty = new Style();
 								sty.setStyle(getEvent(event));
 								em.persist(sty);
-								//System.out.println("Persisted!!!");
+								System.out.println("Style: " + sty.getStyle());
 								styles.add(getEvent(event));
-							} else {
-								//System.out.println("Already in the list!");
 							}							
 						}
 					}
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Exception occuredRS" + e.toString());
+			System.out.println("Exception occured" + e.toString());
 			logger.error("Exception occured", e);
 			status = false;
 		} finally {
@@ -199,22 +191,19 @@ public class XMLParser {
 					if (startElement.getName().getLocalPart() == (MOOD)) {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
-							//System.out.println(getEvent(event));
 							if (!moods.contains(getEvent(event))) {
 								moo = new Mood();
 								moo.setMood(getEvent(event));
 								em.persist(moo);
-								//System.out.println("Persisted!!!");
+								System.out.println("Mood: " + moo.getMood());
 								moods.add(getEvent(event));
-							} else {
-								//System.out.println("Already in the list!");
 							}							
 						}
 					}
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Exception occuredRM" + e.toString());
+			System.out.println("Exception occured" + e.toString());
 			logger.error("Exception occured", e);
 			status = false;
 		} finally {
@@ -256,22 +245,19 @@ public class XMLParser {
 					if (startElement.getName().getLocalPart() == (THEME)) {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
-							//System.out.println(getEvent(event));
 							if (!themes.contains(getEvent(event))) {
 								the = new Theme();
 								the.setTheme(getEvent(event));
 								em.persist(the);
-								//System.out.println("Persisted!!!");
+								System.out.println("Theme: " + the.getTheme());
 								themes.add(getEvent(event));
-							} else {
-								//System.out.println("Already in the list!");
 							}							
 						}
 					}
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Exception occuredRT" + e.toString());
+			System.out.println("Exception occured" + e.toString());
 			logger.error("Exception occured", e);
 			status = false;
 		} finally {
@@ -296,7 +282,7 @@ public class XMLParser {
 	 * @param aXml
 	 * @return Parsed List of Artists
 	 */
-	public List<Artist> readArtists(EntityManager em, String aXml) {
+	public void readArtists(EntityManager em, String aXml) {
 		System.out.println("--> Reading artists ...");
 		ArrayList<Artist> artists = new ArrayList<Artist>();
 		try {
@@ -320,17 +306,14 @@ public class XMLParser {
 							.equals(NAME)) {
 						event = eventReader.nextEvent();
 						art.setName(getEvent(event));
-						System.out.println(getEvent(event));
 						continue;
 					}
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(GENRE) && artFlg) {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
-							System.out.println(getEvent(event));
 							Genre gen = em.createQuery("SELECT g FROM Genre g WHERE g.genre = :genre", Genre.class)
 									.setParameter("genre", getEvent(event)).getSingleResult();
-							//System.out.println("ID of genre: " + gen.getGenreId());
 							art.setGenre(gen);
 						} else {
 							level--;
@@ -341,10 +324,8 @@ public class XMLParser {
 							.equals(STYLE) && artFlg) {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
-							//System.out.println(getEvent(event));
 							Style sty = em.createQuery("SELECT s FROM Style s WHERE s.style = :style", Style.class)
 									.setParameter("style", getEvent(event)).getSingleResult();
-							//System.out.println("ID of style: " + sty.getStyleId());
 							art.addStyle(sty);
 						} else {
 							level--;
@@ -355,10 +336,8 @@ public class XMLParser {
 							.equals(MOOD) && artFlg) {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
-							//System.out.println(getEvent(event));
 							Mood moo = em.createQuery("SELECT m FROM Mood m WHERE m.mood = :mood", Mood.class)
 									.setParameter("mood", getEvent(event)).getSingleResult();
-							//System.out.println("ID of mood: " + moo.getMoodId());
 							art.addMood(moo);
 						} else {
 							level--;
@@ -369,22 +348,20 @@ public class XMLParser {
 							.equals(MUSICBRAINZARTISTID) && artFlg) {
 						event = eventReader.nextEvent();
 						art.setMusicBrainzArtistID(getEvent(event));
-						//System.out.println(getEvent(event));
 						continue;
 					}
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(YEARSACTIVE) && artFlg) {
 						event = eventReader.nextEvent();
 						art.setYearsActive(getEvent(event));
-						System.out.println(getEvent(event));
 						continue;
 					}
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(BIOGRAPHY) && artFlg) {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
+							//TODO: manager larger field and warning
 							art.setBiography(getEvent(event).substring(0, Math.min(getEvent(event).length(), 255)));
-							System.out.println(getEvent(event));
 						} else {
 							level--;
 						}
@@ -395,7 +372,6 @@ public class XMLParser {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
 							art.setBornInfo(getEvent(event));
-							System.out.println(getEvent(event));
 						} else {
 							level--;
 						}
@@ -406,7 +382,6 @@ public class XMLParser {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
 							art.setDied(Boolean.valueOf(getEvent(event)));
-							System.out.println(getEvent(event));
 						} else {
 							level--;
 						}
@@ -416,8 +391,7 @@ public class XMLParser {
 							.equals(FORMED) && artFlg) {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
-							art.setBandFormed(getEvent(event));
-							System.out.println(getEvent(event));							
+							art.setBandFormed(getEvent(event));						
 						} else {
 							level--;
 						}
@@ -428,7 +402,6 @@ public class XMLParser {
 						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
 							art.setBandDisbanded(Boolean.valueOf(getEvent(event)));
-							System.out.println(getEvent(event));
 						} else {
 							level--;
 						}
@@ -439,7 +412,6 @@ public class XMLParser {
 						//event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
 							art.setThumbURL(getEvent(event));
-							System.out.println(getEvent(event));
 						} else {
 							level--;
 						}
@@ -453,14 +425,15 @@ public class XMLParser {
 					if (endElement.getName().getLocalPart() == (ARTIST) && level == 2) {
 						em.persist(art);
 						artists.add(art);
-						System.out.println("Persisted!!!");
 						artFlg = false;
+						System.out.println("Artist: " + art.getName() +
+								" / Number of moods: " + art.getMoods().size());
 					}
 					level--;
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Exception occuredRAr" + e.toString());
+			System.out.println("Exception occured" + e.toString());
 			logger.error("Exception occured", e);
 			status = false;
 		} finally {
@@ -477,8 +450,6 @@ public class XMLParser {
 				status = false;
 			}
 		}
-		
-		return artists;
 	}
 	
 	/**
@@ -488,7 +459,7 @@ public class XMLParser {
 	 * @return Parsed List of Albums
 	 */
 	//TODO: rename aXml to alXml (for artist and album)
-	public List<Album> readAlbums(EntityManager em, String aXml) {
+	public void readAlbums(EntityManager em, String aXml) {
 		System.out.println("--> Reading albums ...");
 		ArrayList<Album> albums = new ArrayList<Album>();
 		try {
@@ -661,8 +632,6 @@ public class XMLParser {
 				status = false;
 			}
 		}
-
-		return albums;
 	}
 	
 	/**
@@ -672,7 +641,7 @@ public class XMLParser {
 	 * @return Parsed List of Tracks
 	 */
 	//TODO: rename trXml ... only 1 file
-	public List<Track> readTracks(EntityManager em, String trXml) {
+	public void readTracks(EntityManager em, String trXml) {
 		System.out.println("--> Reading tracks ...");
 		ArrayList<Track> tracks = new ArrayList<Track>();
 		try {
@@ -770,8 +739,6 @@ public class XMLParser {
 				status = false;
 			}
 		}
-
-		return tracks;
 	}
 	
 	/**

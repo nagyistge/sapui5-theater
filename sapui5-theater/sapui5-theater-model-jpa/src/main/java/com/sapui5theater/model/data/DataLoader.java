@@ -29,8 +29,6 @@ public class DataLoader {
 	}
 	
 	public void loadGenres() {
-		logger.error("Loading genres");
-		System.out.println("--> Loading genres");
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Genre> queryG;
 		List<Genre> resG = null; 
@@ -45,7 +43,7 @@ public class DataLoader {
 			resG = queryG.getResultList();
 			System.out.println("Number of genres: " + resG.size());	
 		} catch (Exception e) {
-			System.out.println("Exception occuredLG" + e);
+			System.out.println("Exception occured" + e);
 			logger.error("Exception occured", e);
 		} finally {
 			em.close();
@@ -53,7 +51,6 @@ public class DataLoader {
 	}
 	
 	public void loadStyles() {
-		System.out.println("--> Loading styles");
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Style> queryS;
 		List<Style> resS = null; 
@@ -68,7 +65,7 @@ public class DataLoader {
 			resS = queryS.getResultList();
 			System.out.println("Number of styles: " + resS.size());
 		} catch (Exception e) {
-			System.out.println("Exception occuredLS" + e);
+			System.out.println("Exception occured" + e);
 			logger.error("Exception occured", e);
 		} finally {
 			em.close();
@@ -76,7 +73,6 @@ public class DataLoader {
 	}
 	
 	public void loadMoods() {
-		System.out.println("--> Loading moods");
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Mood> queryM;
 		List<Mood> resM = null; 
@@ -91,7 +87,7 @@ public class DataLoader {
 			resM = queryM.getResultList();
 			System.out.println("Number of moods: " + resM.size());
 		} catch (Exception e) {
-			System.out.println("Exception occuredLM" + e);
+			System.out.println("Exception occured" + e);
 			logger.error("Exception occured", e);
 		} finally {
 			em.close();
@@ -99,7 +95,6 @@ public class DataLoader {
 	}
 	
 	public void loadThemes() {
-		System.out.println("--> Loading themes");
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Theme> queryT;
 		List<Theme> resT = null; 
@@ -114,7 +109,7 @@ public class DataLoader {
 			resT = queryT.getResultList();
 			System.out.println("Number of themes: " + resT.size());
 		} catch (Exception e) {
-			System.out.println("Exception occuredLT" + e);
+			System.out.println("Exception occured" + e);
 			logger.error("Exception occured", e);
 		} finally {
 			em.close();
@@ -122,7 +117,6 @@ public class DataLoader {
 	}
 	
 	public void loadArtists() {
-		System.out.println("--> Loading artists");
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<Artist> queryAr;
 		List<Artist> resAr = null; 
@@ -138,7 +132,7 @@ public class DataLoader {
 			System.out.println("Number of artists: " + resAr.size());
 			
 		} catch (Exception e) {
-			System.out.println("Exception occuredLAr" + e);
+			System.out.println("Exception occured" + e);
 			logger.error("Exception occured", e);
 		} finally {
 			em.close();
@@ -161,7 +155,7 @@ public class DataLoader {
 			System.out.println("Number of albums: " + resAl.size());
 			
 		} catch (Exception e) {
-			System.out.println("Exception occuredLAl" + e);
+			System.out.println("Exception occured" + e);
 			logger.error("Exception occured", e);
 		} finally {
 			em.close();
@@ -184,7 +178,7 @@ public class DataLoader {
 			System.out.println("--> Number of tracks: " + resTr.size());
 			
 		} catch (Exception e) {
-			System.out.println("Exception occuredLTr" + e);
+			System.out.println("Exception occured" + e);
 			logger.error("Exception occured", e);
 		} finally {
 			em.close();
