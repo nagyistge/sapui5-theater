@@ -43,7 +43,7 @@ public class Artist {
 		      inverseJoinColumns={@JoinColumn(name="MOOD_ID", referencedColumnName="MOOD_ID")})
 	private List<Mood> moods;
 	
-	@Column(name = "MUSICBRAINZ_ARTIST_ID", length = 512)
+	@Column(name = "MUSICBRAINZ_ARTIST_ID", length = 36)
 	private String musicBrainzArtistID;
 	
 	private String yearsActive;
