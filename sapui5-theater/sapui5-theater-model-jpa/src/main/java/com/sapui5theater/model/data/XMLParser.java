@@ -353,7 +353,11 @@ public class XMLParser {
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(YEARSACTIVE) && artFlg) {
 						event = eventReader.nextEvent();
-						art.setYearsActive(getEvent(event));
+						if (!event.isEndElement()) {
+							art.setYearsActive(getEvent(event));
+						} else {
+							level--;
+						}
 						continue;
 					}
 					if (event.asStartElement().getName().getLocalPart()
@@ -409,7 +413,7 @@ public class XMLParser {
 					}
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(THUMB) && level == 4) {
-						//event = eventReader.nextEvent();
+						event = eventReader.nextEvent();
 						if (!event.isEndElement()) {
 							art.setThumbURL(getEvent(event));
 						} else {

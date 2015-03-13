@@ -22,30 +22,44 @@ public class Artist {
 	@GeneratedValue
 	@Column(name = "ARTIST_ID")
 	private long artistId;
+	
 	private String name;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "GENRE", referencedColumnName = "GENRE_ID")
 	private Genre genre;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		      name="ARTIST_STYLE",
 		      joinColumns={@JoinColumn(name="ARTIST_ID", referencedColumnName="ARTIST_ID")},
 		      inverseJoinColumns={@JoinColumn(name="STYLE_ID", referencedColumnName="STYLE_ID")})
 	private List<Style> styles;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		      name="ARTIST_MOOD",
 		      joinColumns={@JoinColumn(name="ARTIST_ID", referencedColumnName="ARTIST_ID")},
 		      inverseJoinColumns={@JoinColumn(name="MOOD_ID", referencedColumnName="MOOD_ID")})
 	private List<Mood> moods;
+	
+	@Column(name = "MUSICBRAINZ_ARTIST_ID", length = 512)
 	private String musicBrainzArtistID;
+	
 	private String yearsActive;
+	
 	private String biography;
+	
 	private String bornInfo;
+	
 	private Boolean died;
+	
 	private String bandFormed;	
+	
 	private Boolean bandDisbanded;
+	
 	private String thumbURL;
+	
 	@OneToMany(mappedBy = "artist", fetch = FetchType.EAGER)
 	private List<Album> albums;
 	

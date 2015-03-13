@@ -36,7 +36,7 @@ public class DataLoader {
 		try {
 			em.getTransaction().begin();
 			new XMLParser().readGenres(em,
-					"com/sapui5theater/model/data/musicdb-test.xml");
+					"com/sapui5theater/model/data/musicdb.xml");
 			em.getTransaction().commit();
 			queryG = em.createQuery("SELECT g FROM Genre g", 
 					Genre.class);
@@ -58,7 +58,7 @@ public class DataLoader {
 		try {
 			em.getTransaction().begin();
 			new XMLParser().readStyles(em,
-					"com/sapui5theater/model/data/musicdb-test.xml");
+					"com/sapui5theater/model/data/musicdb.xml");
 			em.getTransaction().commit();
 			queryS = em.createQuery("SELECT s FROM Style s", 
 					Style.class);
@@ -80,7 +80,7 @@ public class DataLoader {
 		try {
 			em.getTransaction().begin();
 			new XMLParser().readMoods(em,
-					"com/sapui5theater/model/data/musicdb-test.xml");
+					"com/sapui5theater/model/data/musicdb.xml");
 			em.getTransaction().commit();
 			queryM = em.createQuery("SELECT m FROM Mood m", 
 					Mood.class);
@@ -102,7 +102,7 @@ public class DataLoader {
 		try {
 			em.getTransaction().begin();
 			new XMLParser().readThemes(em,
-					"com/sapui5theater/model/data/musicdb-test.xml");
+					"com/sapui5theater/model/data/musicdb.xml");
 			em.getTransaction().commit();
 			queryT = em.createQuery("SELECT th FROM Theme th", 
 					Theme.class);
@@ -124,7 +124,7 @@ public class DataLoader {
 		try {
 			em.getTransaction().begin();
 			new XMLParser().readArtists(em,
-					"com/sapui5theater/model/data/musicdb-test.xml");
+					"com/sapui5theater/model/data/musicdb.xml");
 			em.getTransaction().commit();
 			queryAr = em.createQuery("SELECT ar FROM Artist ar", 
 					Artist.class);
@@ -147,7 +147,7 @@ public class DataLoader {
 		try {
 			em.getTransaction().begin();
 			new XMLParser().readAlbums(em,
-					"com/sapui5theater/model/data/musicdb-test.xml");
+					"com/sapui5theater/model/data/musicdb.xml");
 			em.getTransaction().commit();
 			queryAl = em.createQuery("SELECT al FROM Album al", 
 					Album.class);
@@ -170,7 +170,7 @@ public class DataLoader {
 		try {
 			em.getTransaction().begin();
 			new XMLParser().readTracks(em,
-					"com/sapui5theater/model/data/musicdb-test.xml");
+					"com/sapui5theater/model/data/musicdb.xml");
 			em.getTransaction().commit();
 			queryTr = em.createQuery("SELECT tr FROM Track tr", 
 					Track.class);
@@ -192,8 +192,8 @@ public class DataLoader {
 		loadMoods();
 		loadThemes();
 		loadArtists();
-		loadAlbums();
-		loadTracks();
+		//loadAlbums();
+		//loadTracks();
 	}
 
 }
