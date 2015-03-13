@@ -21,40 +21,58 @@ public class Album {
 	@GeneratedValue
 	@Column(name = "ALBUM_ID")
 	private long albumId;
+	
 	private String title;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ARTIST", referencedColumnName = "ARTIST_ID")
 	private Artist artist;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "GENRE", referencedColumnName = "GENRE_ID")
 	private Genre genre;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		      name="ALBUM_STYLE",
 		      joinColumns={@JoinColumn(name="ALBUM_ID", referencedColumnName="ALBUM_ID")},
 		      inverseJoinColumns={@JoinColumn(name="STYLE_ID", referencedColumnName="STYLE_ID")})
 	private List<Style> styles;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		      name="ALBUM_MOOD",
 		      joinColumns={@JoinColumn(name="ALBUM_ID", referencedColumnName="ALBUM_ID")},
 		      inverseJoinColumns={@JoinColumn(name="MOOD_ID", referencedColumnName="MOOD_ID")})
 	private List<Mood> moods;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		      name="ALBUM_THEME",
 		      joinColumns={@JoinColumn(name="ALBUM_ID", referencedColumnName="ALBUM_ID")},
 		      inverseJoinColumns={@JoinColumn(name="THEME_ID", referencedColumnName="THEME_ID")})
 	private List<Theme> themes;
+	
+	@Column(name = "MUSICBRAINZ_ALBUM_ID", length = 36)
 	private String musicBrainzAlbumID;
+	
 	private Boolean compilation;
+	
 	private String review;
+	
 	private int yearRelease;
+	
 	private String label;
+	
 	private int rating;
+	
 	private String thumbURL;
+	
 	@OneToMany(mappedBy = "album", fetch = FetchType.EAGER)
 	private List<Track> tracks;
+	
+	@ManyToMany(mappedBy="albums", fetch = FetchType.EAGER)
+	private List<AppUser> appUsers;
 
 	public long getAlbumId() {
 		return albumId;
@@ -190,6 +208,18 @@ public class Album {
 	
 	public void addTrack(Track param) {
 		this.tracks.add(param);
+	}
+	
+	public List<AppUser> getAppUsers() {
+		return appUsers;
+	}
+
+	public void setAppUsers(List<AppUser> param) {
+		this.appUsers = param;
+	}
+	
+	public void addAppUser(AppUser param) {
+		this.appUsers.add(param);
 	}
 	
 }

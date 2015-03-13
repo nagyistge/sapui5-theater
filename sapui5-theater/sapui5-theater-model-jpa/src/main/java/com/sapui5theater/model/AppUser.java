@@ -16,9 +16,19 @@ public class AppUser {
 	private String userId;
 	
 	private String kodiIP;
+	
 	private int kodiPort;
+	
 	private String kodiUser;
+	
 	private String kodiPassword;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+		      name="USER_ALBUM",
+		      joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="USER_ID")},
+		      inverseJoinColumns={@JoinColumn(name="ALBUM_ID", referencedColumnName="ALBUM_ID")})
+	private List<Album> albums;
 
 	public String getUserId() {
 		return userId;
@@ -59,5 +69,17 @@ public class AppUser {
 	public void setKodiPassword(String kodiPassword) {
 		this.kodiPassword = kodiPassword;
 	}
+	
+	public List<Album> getAlbums() {
+		return albums;
+	}
+
+	public void setAlbums(List<Album> param) {
+		this.albums = param;
+	}
+	
+	public void addAlbum(Album param) {
+		this.albums.add(param);
+	}	
 	
 }

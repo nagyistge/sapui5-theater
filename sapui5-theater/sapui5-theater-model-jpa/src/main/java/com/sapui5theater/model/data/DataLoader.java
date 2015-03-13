@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 
+import javax.xml.stream.XMLInputFactory;
+
 //TODO: implement logging and where to read the logs? // Complex, use jul-2-slf4j
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import com.sapui5theater.model.Theme;
 import com.sapui5theater.model.Artist;
 import com.sapui5theater.model.Album;
 import com.sapui5theater.model.Track;
+import com.sapui5theater.model.AppUser;
 
 public class DataLoader {
 	
@@ -185,6 +188,29 @@ public class DataLoader {
 		}
 	}
 	
+	public void loadAppUsers() {
+		EntityManager em = emf.createEntityManager();
+		TypedQuery<AppUser> queryAU;
+		List<AppUser> resAU = null; 
+		try {
+			em.getTransaction().begin();
+			AppUser appuse = new AppUser();
+			appuse.setUserId("I305327");
+			em.persist(appuse);
+			em.getTransaction().commit();
+			queryAU = em.createQuery("SELECT au FROM AppUser au", 
+					AppUser.class);
+			resAU = queryAU.getResultList();
+			System.out.println("--> Number of application users: " + resAU.size());
+			
+		} catch (Exception e) {
+			System.out.println("Exception occured" + e);
+			logger.error("Exception occured", e);
+		} finally {
+			em.close();
+		}
+	}
+	
 	public void loadData() {
 		System.out.println("--> DataLoader");
 		loadGenres();
@@ -194,6 +220,7 @@ public class DataLoader {
 		loadArtists();
 		loadAlbums();
 		loadTracks();
+		loadAppUsers();
 	}
 
 }
