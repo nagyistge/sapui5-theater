@@ -1,5 +1,6 @@
 package com.sapui5theater.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 public class AppUser {
 
 	public AppUser() {
+		this.albums = new ArrayList<Album>();
 	}
 
 	@Id
@@ -23,11 +25,7 @@ public class AppUser {
 	
 	private String kodiPassword;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-		      name="USER_ALBUM",
-		      joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="USER_ID")},
-		      inverseJoinColumns={@JoinColumn(name="ALBUM_ID", referencedColumnName="ALBUM_ID")})
+	@ManyToMany(mappedBy="appUsers", fetch = FetchType.EAGER)
 	private List<Album> albums;
 
 	public String getUserId() {

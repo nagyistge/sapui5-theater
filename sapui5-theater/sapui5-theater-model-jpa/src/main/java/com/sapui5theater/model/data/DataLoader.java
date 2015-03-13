@@ -195,7 +195,7 @@ public class DataLoader {
 		try {
 			em.getTransaction().begin();
 			AppUser appuse = new AppUser();
-			appuse.setUserId("I305327");
+			appuse.setUserId("I123456");
 			em.persist(appuse);
 			em.getTransaction().commit();
 			queryAU = em.createQuery("SELECT au FROM AppUser au", 
@@ -213,6 +213,7 @@ public class DataLoader {
 	
 	public void loadData() {
 		System.out.println("--> DataLoader");
+		loadAppUsers();
 		loadGenres();
 		loadStyles();
 		loadMoods();
@@ -220,7 +221,6 @@ public class DataLoader {
 		loadArtists();
 		loadAlbums();
 		loadTracks();
-		loadAppUsers();
 	}
 
 }

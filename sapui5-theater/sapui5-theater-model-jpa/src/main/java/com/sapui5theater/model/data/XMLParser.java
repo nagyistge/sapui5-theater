@@ -16,6 +16,7 @@ import javax.xml.stream.events.XMLEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.sapui5theater.model.AppUser;
 import com.sapui5theater.model.Genre;
 import com.sapui5theater.model.Style;
 import com.sapui5theater.model.Mood;
@@ -475,6 +476,8 @@ public class XMLParser {
 			int level = 0;
 			Boolean albFlg = false;
 			Boolean thuFlg = false;
+			AppUser appuse = em.createQuery("SELECT au FROM AppUser au WHERE au.userId = :id", AppUser.class)
+					.setParameter("id", "I123456").getSingleResult();
 			while (eventReader.hasNext()) {
 				XMLEvent event = eventReader.nextEvent();
 				if (event.isStartElement()) {
@@ -483,6 +486,7 @@ public class XMLParser {
 					if (startElement.getName().getLocalPart() == (ALBUM) && level == 2) {
 						albFlg = true;
 						alb = new Album();
+						alb.addAppUser(appuse);
 					}
 					if (event.asStartElement().getName().getLocalPart()
 							.equals(TITLE) && level == 3) {
@@ -613,7 +617,8 @@ public class XMLParser {
 						System.out.println("Album: " + alb.getTitle() +
 								" / Artist: " + alb.getArtist().getName() +
 								" (" + alb.getArtist().getArtistId() + ")" +
-								" - Number of moods:" + alb.getMoods().size());
+								" - Number of moods: " + alb.getMoods().size() +
+								" - Number of users: " + alb.getAppUsers().size());
 					}
 					level--;
 				}

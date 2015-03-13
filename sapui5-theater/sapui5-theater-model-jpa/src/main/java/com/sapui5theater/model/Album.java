@@ -15,6 +15,7 @@ public class Album {
 		this.moods = new ArrayList<Mood>();
 		this.themes = new ArrayList<Theme>();
 		this.tracks = new ArrayList<Track>();
+		this.appUsers = new ArrayList<AppUser>();
 	}
 
 	@Id
@@ -71,7 +72,12 @@ public class Album {
 	@OneToMany(mappedBy = "album", fetch = FetchType.EAGER)
 	private List<Track> tracks;
 	
-	@ManyToMany(mappedBy="albums", fetch = FetchType.EAGER)
+	//TODO: understand why it is not bijective
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+		      name="ALBUM_USER",
+		      joinColumns={@JoinColumn(name="ALBUM_ID", referencedColumnName="ALBUM_ID")},
+		      inverseJoinColumns={@JoinColumn(name="USER_ID", referencedColumnName="USER_ID")})
 	private List<AppUser> appUsers;
 
 	public long getAlbumId() {
