@@ -6,7 +6,15 @@ sap.ui.controller("sapui5-theater-web.musicalbums", {
 * @memberOf test-xml.test-xml
 */
 	onInit: function() {
-		
+		var sOrigin = window.location.protocol + "//"
+				+ window.location.hostname
+				+ (window.location.port ? ":" + window.location.port : "");
+		var albumsListOdataServiceUrl = sOrigin
+				+ "/sapui5-theater-web/theater.svc/";
+		var odataModel = new sap.ui.model.odata.ODataModel(
+				albumsListOdataServiceUrl);
+		odataModel.setCountSupported(false);
+		this.getView().setModel(odataModel);
 	},
 
 /**
